@@ -1,0 +1,43 @@
+{
+  "name": "white-board",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.2",
+    "socket.io-client": "^2.2.0",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "Here is the site : https://collaborative-editor.netlify.app/ At first you have to create a room or join a room with an id number. When you and your friend join the same room, you will get two modes->one is text mode, another is board mode.You have to enable one of the two modes  to start collaborating.In board mode,you can draw something and the other friend can see the drawing in realtime.",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
+}
