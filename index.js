@@ -36,28 +36,40 @@ app.get('/showpdf', function (req, res) {
 
 });
 
-var clickCount = 0;
+var clickCount = 1;
 io.on('connection', function (socket) {
 
+  var filePath = "/sample.pdf";
+  socket.emit("sendfile", { filePath, clickCount });
 
-  var filePath = "/public/sample.pdf";
-
-  // socket.emit("sendfile", filePath);
-
-  fs.readFile(__dirname + filePath, function (error, filedata) {
-    if (error) throw error;
-    else socket.emit("sendfile", filedata.toString());
-  });
+  // fs.readFile(__dirname + filePath, function (error, filedata) {
+  //   if (error) throw error;
+  //   else socket.emit("sendfile",  filePath);
+  // });
 
   //when the server receives clicked message, do this
 
 
 
-  socket.on('clicked', function(data) {
-  	  clickCount++;
+
+
+
+
+
+  socket.on('nextclicked', function (data) {
+    clickCount++;
 
     io.emit('buttonUpdate', clickCount);
   });
+
+
+  socket.on('previousclicked', function (data) {
+    clickCount--;
+
+    io.emit('buttonUpdate', clickCount);
+  });
+
+  
 });
 
 

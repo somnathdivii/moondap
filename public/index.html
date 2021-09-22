@@ -14,8 +14,8 @@
   <!-- <button onclick="buttonClicked()">Click me</button> -->
 
   <div>
-    <button id="prev">Previous</button>
-    <button onclick="buttonClicked()" id="next">Next</button>
+    <button  onclick="PreviousbuttonClicked()" id="prev">Previous</button>
+    <button onclick="NextbuttonClicked()" id="next">Next</button>
     &nbsp; &nbsp;
     <span>Page:
       <span id="page_num"></span> /
@@ -35,23 +35,18 @@
   <script>
     var socket = io.connect();
 
-    function buttonClicked() {
-      socket.emit('clicked');
+    function NextbuttonClicked() {
+      socket.emit('nextclicked');
+    }
+
+    function PreviousbuttonClicked() {
+      socket.emit('previousclicked');
     }
 
     //when we receive numClients, do this 
     socket.on('sendfile', function (data) {
-      document.getElementById("buttonCount").innerHTML = data;
-    });
-
-
-    
-    socket.on('buttonUpdate', function (data) {
-
-
-
-      var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
-
+      // document.getElementById("buttonCount").innerHTML = data;
+      var url = data.filePath;
       // Loaded via <script> tag, create shortcut to access PDF.js exports.
       var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
@@ -59,7 +54,7 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
       var pdfDoc = null,
-        pageNum = data,
+        pageNum = data.clickCount,
         pageRendering = false,
         pageNumPending = null,
         scale = 0.8,
@@ -98,6 +93,26 @@
       }
 
       /**
+       * Asynchronously downloads PDF.
+       */
+      pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+        // Initial/first page rendering
+        renderPage(pageNum);
+      });
+
+
+    });
+
+
+
+    socket.on('buttonUpdate', function (num) {
+
+
+
+      /**
        * If another page rendering in progress, waits until the rendering is
        * finised. Otherwise, executes rendering immediately.
        */
@@ -133,16 +148,6 @@
       }
       document.getElementById('next').addEventListener('click', onNextPage);
 
-      /**
-       * Asynchronously downloads PDF.
-       */
-      pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
-        pdfDoc = pdfDoc_;
-        document.getElementById('page_count').textContent = pdfDoc.numPages;
-
-        // Initial/first page rendering
-        renderPage(pageNum);
-      });
 
 
 
@@ -150,6 +155,8 @@
 
 
     });
+
+
 
 
 
