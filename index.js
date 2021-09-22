@@ -4,25 +4,60 @@ const fs = require('fs');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const ss = require('socket.io-stream');
 const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
 
-function onConnection(socket){
-  socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-}
+// function onConnection(socket){
+//   var filePath = "/public/sample.pdf";
+//   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+
+
+
+// //   fs.readFile(__dirname + filePath , function (err,data){
+// //     res.contentType("application/pdf");
+// //     res.send(data);
+// // });
+
+
+// }
 
 
 app.get('/showpdf', function (req, res) {
 
-  
+
   var filePath = "/public/sample.pdf";
 
-  fs.readFile(__dirname + filePath , function (err,data){
-      res.contentType("application/pdf");
-      res.send(data);
+  fs.readFile(__dirname + filePath, function (err, data) {
+    res.contentType("application/pdf");
+    res.send(data);
   });
 
+});
+
+var clickCount = 0;
+io.on('connection', function (socket) {
+
+
+  var filePath = "/public/sample.pdf";
+
+  // socket.emit("sendfile", filePath);
+
+  fs.readFile(__dirname + filePath, function (error, filedata) {
+    if (error) throw error;
+    else socket.emit("sendfile", filedata.toString());
+  });
+
+  //when the server receives clicked message, do this
+
+
+
+  socket.on('clicked', function(data) {
+  	  clickCount++;
+
+    io.emit('buttonUpdate', clickCount);
+  });
 });
 
 
@@ -44,6 +79,6 @@ app.get('/showpdf', function (req, res) {
 
 
 
-io.on('connection', onConnection);
+// io.on('connection', onConnection);
 
 http.listen(port, () => console.log('listening on port ' + port));
