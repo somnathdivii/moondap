@@ -42,16 +42,18 @@ io.on('connection', function (socket) {
   var filePath = "/sample.pdf";
   socket.emit("sendfile", { filePath, clickCount });
 
- 
 
   socket.on('nextclicked', function (data) {
+
+    var page_cnt = data;
+    if(clickCount >= page_cnt)
+    {
+       return false;
+    }
     clickCount++;
 
-
-    var total = document.getElementById('page_count');
-    console.log(total);
-
-    io.emit('buttonUpdate', { filePath, clickCount });
+    var filePath = "/sample.pdf";
+    io.emit('buttonUpdate', {filePath,clickCount});
   });
 
 
@@ -67,24 +69,6 @@ io.on('connection', function (socket) {
 
 
 });
-
-
-// app.post('/url/pdf', function(req, res, next) {
-//   var stream = fs.readStream('/location/of/pdf');
-//   var filename = "WhateverFilenameYouWant.pdf"; 
-//   // Be careful of special characters
-
-//   filename = encodeURIComponent(filename);
-//   // Ideally this should strip them
-
-//   res.setHeader('Content-disposition', 'inline; filename="' + filename + '"');
-//   res.setHeader('Content-type', 'application/pdf');
-
-//   stream.pipe(res);
-// });
-
-
-
 
 
 // io.on('connection', onConnection);
