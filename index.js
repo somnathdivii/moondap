@@ -42,34 +42,30 @@ io.on('connection', function (socket) {
   var filePath = "/sample.pdf";
   socket.emit("sendfile", { filePath, clickCount });
 
-  // fs.readFile(__dirname + filePath, function (error, filedata) {
-  //   if (error) throw error;
-  //   else socket.emit("sendfile",  filePath);
-  // });
-
-  //when the server receives clicked message, do this
-
-
-
-
-
-
-
+ 
 
   socket.on('nextclicked', function (data) {
     clickCount++;
 
-    io.emit('buttonUpdate', clickCount);
+
+    var total = document.getElementById('page_count');
+    console.log(total);
+
+    io.emit('buttonUpdate', { filePath, clickCount });
   });
 
 
   socket.on('previousclicked', function (data) {
+
+    if (clickCount <= 1) {
+      return;
+    }
     clickCount--;
 
-    io.emit('buttonUpdate', clickCount);
+    io.emit('buttonUpdate', { filePath, clickCount });
   });
 
-  
+
 });
 
 
