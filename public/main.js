@@ -10,7 +10,7 @@
   
   //when we receive numClients, do this
   socket.on('buttonUpdate', function(data){
-    document.getElementById("buttonCount").innerHTML = 'The button has been clicked ' + data + ' times.';
+    //document.getElementById("buttonCount").innerHTML = 'The button has been clicked ' + data + ' times.';
   });
 
   // var current = {
