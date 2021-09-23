@@ -27,7 +27,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/showpdf', function (req, res) {
 
 
-  var filePath = "/public/sample.pdf";
+  var filePath = "/public/test.pdf";
 
   fs.readFile(__dirname + filePath, function (err, data) {
     res.contentType("application/pdf");
@@ -39,7 +39,7 @@ app.get('/showpdf', function (req, res) {
 var clickCount = 1;
 io.on('connection', function (socket) {
 
-  var filePath = "/sample.pdf";
+  var filePath = "/test.pdf";
   socket.emit("sendfile", { filePath, clickCount });
 
 
@@ -52,7 +52,7 @@ io.on('connection', function (socket) {
     }
     clickCount++;
 
-    var filePath = "/sample.pdf";
+    var filePath = "/test.pdf";
     io.emit('buttonUpdate', {filePath,clickCount});
   });
 

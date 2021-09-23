@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Socket.IO whiteboard</title>
+  <title>PDF Sharing</title>
   <link rel="stylesheet" href="style.css">
   <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 
@@ -17,12 +17,13 @@
 
 <body>
 
-  <p id="buttonCount">The button has been clicked 0 times.</p>
+  <p id="buttonCount"></p>
   <!-- <button onclick="buttonClicked()">Click me</button> -->
 
   <div>
     <button onclick="PreviousbuttonClicked();" id="prev">Previous</button>
     <button onclick="NextbuttonClicked();" id="next">Next</button>
+
     &nbsp; &nbsp;
     <span>Page:
       <span id="page_num"></span> /
@@ -36,6 +37,7 @@
 
 
   <script src="/socket.io/socket.io.js"></script>
+  <!-- <script src="/script.js"></script> -->
 
 
 
@@ -52,6 +54,7 @@
       socket.emit('previousclicked');
     }
 
+
     //when we receive numClients, do this 
     socket.on('sendfile', function (data) {
       // document.getElementById("buttonCount").innerHTML = data;
@@ -66,9 +69,12 @@
         pageNum = data.clickCount,
         pageRendering = false,
         pageNumPending = null,
-        scale = 0.8,
+        scale = 1.8,
         canvas = document.getElementById('the-canvas'),
         ctx = canvas.getContext('2d');
+        ctx.font = "60px Arial";
+
+        var zoom_page_no = pageNum;
 
 
       function renderPage(num) {
@@ -124,9 +130,10 @@
       var url = data.filePath;
       var pageNum = data.clickCount;
       var pageNumPending = null;
-      var scale = 0.8;
+      var scale = 1.8;
       var canvas = document.getElementById('the-canvas');
       var ctx = canvas.getContext('2d');
+      ctx.font = "60px Arial";
       
 
       function renderPage(pageNum) {

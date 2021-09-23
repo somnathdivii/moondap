@@ -1,5 +1,6 @@
 {
   "name": "whiteboard",
+  "homepage": "https://demo1.dvconsulting.org/react-sample/moondap/",
   "version": "1.0.0",
   "description": "A simple collaborative whiteboard using socket.io",
   "main": "index.js",
