@@ -3,19 +3,18 @@
   "version": "1.0.0",
   "description": "A simple collaborative whiteboard using socket.io",
   "main": "index.js",
+  "build": "webpack --config webpack.conf.js",
   "keywords": [
     "socket.io",
     "whiteboard"
   ],
   "dependencies": {
-    "broadcastmouseevents": "^1.0.1",
     "express": "^4.17.1",
-    "socket.io": "^4.2.0",
-    "socket.io-stream": "^0.9.1"
+    "socket.io": "^4.2.0"
   },
   "scripts": {
     "start": "node index"
   },
-  "author": "Damien Arrachequesne",
+  "author": "Divii",
   "license": "MIT"
 }
