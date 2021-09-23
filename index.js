@@ -4,7 +4,7 @@ const fs = require('fs');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const ss = require('socket.io-stream');
+// const ss = require('socket.io-stream');
 const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
@@ -27,7 +27,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/showpdf', function (req, res) {
 
 
-  var filePath = "/public/test.pdf";
+  var filePath = "/public/sample.pdf";
 
   fs.readFile(__dirname + filePath, function (err, data) {
     res.contentType("application/pdf");
@@ -37,23 +37,23 @@ app.get('/showpdf', function (req, res) {
 });
 
 var clickCount = 1;
+var scale = 0.8;
 io.on('connection', function (socket) {
 
-  var filePath = "/test.pdf";
+  var filePath = "/sample.pdf";
   socket.emit("sendfile", { filePath, clickCount });
 
 
   socket.on('nextclicked', function (data) {
 
     var page_cnt = data;
-    if(clickCount >= page_cnt)
-    {
-       return false;
+    if (clickCount >= page_cnt) {
+      return false;
     }
     clickCount++;
 
-    var filePath = "/test.pdf";
-    io.emit('buttonUpdate', {filePath,clickCount});
+    // var filePath = "/sample.pdf";
+    io.emit('buttonUpdate', { filePath, clickCount, scale });
   });
 
 
@@ -64,10 +64,28 @@ io.on('connection', function (socket) {
     }
     clickCount--;
 
-    io.emit('buttonUpdate', {filePath,clickCount});
+    io.emit('buttonUpdate', { filePath, clickCount, scale });
   });
 
-  
+  // -----------ZOOM IN -----------------
+  socket.on('zoominclicked', function (data) {
+
+    scale = scale + 0.25;
+
+    io.emit('buttonUpdate', { filePath, clickCount, scale });
+  });
+
+
+  socket.on('zoomoutclicked', function (data) {
+
+    if (scale <= 0.25) {
+      return;
+    }
+    scale = scale - 0.25;
+    io.emit('buttonUpdate', { filePath, clickCount, scale });
+  });
+
+
 });
 
 
