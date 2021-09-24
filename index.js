@@ -38,14 +38,17 @@ app.get('/showpdf', function (req, res) {
 
 var clickCount = 1;
 var scale = 1.8;
+
+
 io.on('connection', function (socket) {
 
   var filePath = "/test.pdf";
-  socket.emit("sendfile", { filePath, clickCount });
+  socket.emit("sendfile", { filePath, clickCount});
 
 
   socket.on('nextclicked', function (data) {
 
+    // console.log('test'+ui);
     var page_cnt = data;
     if (clickCount >= page_cnt) {
       return false;
@@ -88,8 +91,11 @@ io.on('connection', function (socket) {
 
   socket.on('scrolled', function (data) {
 
+    console.log(data);
+    var pos = data.scrollPosition;
+    var id = data.uid;
 
-    io.emit('scrolling', data);
+    io.emit('scrolling', {pos,id});
   });
 
 
