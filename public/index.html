@@ -72,8 +72,8 @@
 
 
     scrollableElement.addEventListener("scroll", event => {
-      var scrollPosition = scrollableElement.scrollTop;
-      socket.emit('scrolled', { scrollPosition: scrollPosition, uid: 100 });
+      scrollPosition = scrollableElement.scrollTop;
+     // socket.emit('scrolled', { scrollPosition: scrollPosition, uid: 100 });
     });
     // function Scroll() {
     //   console.log('gfsfdsf');
@@ -289,7 +289,7 @@
 
       console.log(data.id);
 
-      $(scrollableElement).scrollTop(data.pos);
+      $(scrollableElement).scrollTop(scrollPosition);
       // scrollableElement.scrollTop = data.pos;
 
     });
