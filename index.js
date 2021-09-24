@@ -92,10 +92,9 @@ io.on('connection', function (socket) {
   socket.on('scrolled', function (data) {
 
     console.log(data);
-    var pos = data.scrollPosition;
-    var id = data.uid;
 
-    io.emit('scrolling', {pos,id});
+
+    io.emit('scrolling', data);
   });
 
 
