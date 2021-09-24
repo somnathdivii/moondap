@@ -33,7 +33,7 @@
     </span>
 
   </div>
-  <div onscroll='Scroll();' id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;">
+  <div id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;">
     <canvas id="the-canvas"></canvas>
   </div>
 
@@ -49,6 +49,9 @@
     var socket = io.connect();
 
     var scrollPosition;
+    const scrollableElement = document.querySelector("#scrollableElement");
+
+
     function NextbuttonClicked() {
       var page_cnt = document.getElementById('page_count').innerText;
       socket.emit('nextclicked', page_cnt);
@@ -67,17 +70,22 @@
       socket.emit('zoomoutclicked');
     }
 
-    function Scroll() {
-      console.log('gfsfdsf');
 
-
-      var tempScrollTop = $('.scrollableElement').scrollTop();
-
-      scrollPosition = tempScrollTop.toString();
-
-
+    scrollableElement.addEventListener("scroll", event => {
+      var scrollPosition = scrollableElement.scrollTop;
       socket.emit('scrolled', scrollPosition);
-    }
+    });
+    // function Scroll() {
+    //   console.log('gfsfdsf');
+
+
+    //   var tempScrollTop = $('.scrollableElement').scrollTop();
+
+    //   scrollPosition = tempScrollTop.toString();
+
+
+    //   socket.emit('scrolled', scrollPosition);
+    // }
 
 
     //when we receive numClients, do this 
@@ -281,7 +289,7 @@
 
       console.log(data);
 
-      // $('#scrollableElement').scrollTop(data);
+      $(scrollableElement).scrollTop(data);
 
     });
 
