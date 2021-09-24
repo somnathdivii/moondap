@@ -72,12 +72,12 @@
 
 
     // scrollableElement.addEventListener("scroll", event => {
-    //   scrollPosition = scrollableElement.scrollTop;
-    //   socket.emit('scrolled', { scrollPosition: scrollPosition, uid: 100 });
+    //   scrollPosition = scrollY;
+    //   socket.emit('scrolled', scrollPosition);
     // });
     function Scroll() {
       console.log('gfsfdsf');
-      var tempScrollTop = $('.scrollableElement').scrollTop();
+      var tempScrollTop = $(scrollableElement).scrollTop();
       scrollPosition = tempScrollTop.toString();
       socket.emit('scrolled', scrollPosition);
     }
@@ -284,10 +284,9 @@
 
       console.log(data);
 
-      setTimeout(() => {
-        $(scrollableElement).scrollTop(data);
-      }, 1000)
-      
+      $(scrollableElement).scrollTop(data);
+      // }, 1000)
+
       // scrollableElement.scrollTop = data.pos;
 
     });
