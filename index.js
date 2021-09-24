@@ -87,7 +87,8 @@ io.on('connection', function (socket) {
 
 
   socket.on('scrolled', function (data) {
-    console.log(data);
+
+
     io.emit('scrolling', data);
   });
 
