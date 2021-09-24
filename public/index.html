@@ -77,13 +77,8 @@
     // });
     function Scroll() {
       console.log('gfsfdsf');
-
-
       var tempScrollTop = $('.scrollableElement').scrollTop();
-
       scrollPosition = tempScrollTop.toString();
-
-
       socket.emit('scrolled', scrollPosition);
     }
 
@@ -289,7 +284,10 @@
 
       console.log(data);
 
-      $(scrollableElement).scrollTop(data);
+      setTimeout(() => {
+        $(scrollableElement).scrollTop(data);
+      }, 1000)
+      
       // scrollableElement.scrollTop = data.pos;
 
     });
