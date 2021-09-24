@@ -2,7 +2,7 @@
   "name": "whiteboard",
   "homepage": "https://demo1.dvconsulting.org/react-sample/moondap/",
   "version": "1.0.0",
-  "description": "A simple collaborative whiteboard using socket.io",
+  "description": "A simple collaborative pdf controlling using socket.io",
   "main": "index.js",
   "build": "webpack --config webpack.conf.js",
   "keywords": [

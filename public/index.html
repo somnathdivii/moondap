@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Socket.IO whiteboard</title>
+  <title>Socket.IO Pdf Controller</title>
   <link rel="stylesheet" href="style.css">
   <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 
@@ -195,9 +195,7 @@
           renderPage(num);
         }
       }
-      function displayPage(pdf, num) {
-        pdf.getPage(num).then(function getPage(page) { renderPage(page); });
-      }
+      
 
       /**
        * Displays previous page.
