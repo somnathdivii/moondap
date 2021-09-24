@@ -86,6 +86,12 @@ io.on('connection', function (socket) {
   });
 
 
+  socket.on('scrolled', function (data) {
+
+    io.emit('scrolling', data);
+  });
+
+
 });
 
 

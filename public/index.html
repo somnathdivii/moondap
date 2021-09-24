@@ -26,18 +26,20 @@
 
     <button id="zoominbutton" onclick="ZoominClicked()" type="button">zoom in</button>
     <button id="zoomoutbutton" onclick="ZoomoutClicked()" type="button">zoom out</button>
-    &nbsp; &nbsp;
+    <input type="hidden" id="currpos"> &nbsp; &nbsp;
     <span>Page:
       <span id="page_num"></span> /
       <span id="page_count"></span>
     </span>
 
   </div>
+  <div onscroll='Scroll();' id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;">
+    <canvas id="the-canvas"></canvas>
+  </div>
 
-  <canvas id="the-canvas"></canvas>
 
 
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 
 
@@ -46,6 +48,7 @@
   <script>
     var socket = io.connect();
 
+    var scrollPosition;
     function NextbuttonClicked() {
       var page_cnt = document.getElementById('page_count').innerText;
       socket.emit('nextclicked', page_cnt);
@@ -62,6 +65,18 @@
 
     function ZoomoutClicked() {
       socket.emit('zoomoutclicked');
+    }
+
+    function Scroll() {
+      console.log('gfsfdsf');
+
+
+      var tempScrollTop = $('#scrollableElement').scrollTop();
+
+      scrollPosition = tempScrollTop.toString();
+
+
+      socket.emit('scrolled', scrollPosition);
     }
 
 
@@ -195,7 +210,6 @@
           renderPage(num);
         }
       }
-      
 
       /**
        * Displays previous page.
@@ -211,7 +225,7 @@
           document.getElementById('prev').visibility = "hidden";
         }
       }
-      document.getElementById('prev').addEventListener('click', onPrevPage);
+      // document.getElementById('prev').addEventListener('click', onPrevPage);
 
       /**
        * Displays next page.
@@ -227,9 +241,7 @@
           document.getElementById('next').visibility = "hidden";
         }
       }
-      document.getElementById('next').addEventListener('click', onNextPage);
-
-
+      // document.getElementById('next').addEventListener('click', onNextPage);
 
       // var zoominbutton = document.getElementById("zoominbutton");
       // zoominbutton.onclick = 
@@ -238,7 +250,7 @@
         // displayPage(shownPdf, pageNum);
         queueRenderPage(pageNum);
       }
-      document.getElementById('zoominbutton').addEventListener('click', zoominbutton);
+      // document.getElementById('zoominbutton').addEventListener('click', zoominbutton);
 
       // var zoomoutbutton = document.getElementById("zoomoutbutton");
       // zoomoutbutton.onclick = 
@@ -250,7 +262,10 @@
         // displayPage(shownPdf, pageNum);
         queueRenderPage(pageNum);
       }
-      document.getElementById('zoomoutbutton').addEventListener('click', zoomoutbutton);
+      // document.getElementById('zoomoutbutton').addEventListener('click', zoomoutbutton);
+
+
+
 
 
       pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
@@ -258,6 +273,15 @@
         document.getElementById('page_count').textContent = pdfDoc.numPages;
         renderPage(pageNum);
       });
+
+    });
+
+
+    socket.on('scrolling', function (data) {
+
+      console.log(data);
+
+      $('#scrollableElement').scrollTop(data)
 
     });
 
