@@ -42,6 +42,8 @@ var scale = 1.8;
 
 io.on('connection', function (socket) {
 
+  var ids = socket.id;
+  console.log(ids);
   var filePath = "/test.pdf";
   socket.emit("sendfile", { filePath, clickCount});
 
@@ -91,10 +93,10 @@ io.on('connection', function (socket) {
 
   socket.on('scrolled', function (data) {
 
-    console.log(data);
+    // console.log(data);
 
 
-    io.emit('scrolling', data);
+    io.emit('scrolling', {data,ids});
   });
 
 

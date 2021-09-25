@@ -49,6 +49,7 @@
     var socket = io.connect();
 
     var scrollPosition;
+    var admin = false;
     const scrollableElement = document.querySelector("#scrollableElement");
 
 
@@ -81,7 +82,7 @@
       scrollPosition = tempScrollTop.toString();
 
       socket.emit('scrolled', scrollPosition);
-      
+
       console.log(scrollPosition);
     }
 
@@ -285,12 +286,25 @@
 
     socket.on('scrolling', function (data) {
 
-      console.log(data);
+      var ids = socket.id;
+      admin = false;
 
+
+
+      console.log(data.ids,ids)
+      console.log("")
+
+      if (data.ids != ids) {
+        console.log("DO scroll")
+        $(scrollableElement).scrollTop(data.data);
+      }else{
+        console.log("Do nothing !")
+        return;
+      }
       // $(scrollableElement).scrollTop(data);
       // }, 1000)
 
-      scrollableElement.scrollTop=data;
+      // scrollableElement.scrollTop=data;
 
     });
 
