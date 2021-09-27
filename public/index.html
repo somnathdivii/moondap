@@ -4,6 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Socket.IO Pdf Controller</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <link rel="stylesheet" href="style.css">
   <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 
@@ -17,27 +23,35 @@
 
 <body>
 
-  <p id="buttonCount">PDF Shaing</p>
+  <!-- <p id="buttonCount">PDF Shaing</p> -->
   <!-- <button onclick="buttonClicked()">Click me</button> -->
 
-  <div>
-    <button onclick="PreviousbuttonClicked();" id="prev">Previous</button>
-    <button onclick="NextbuttonClicked();" id="next">Next</button>
+  <div class="container">
+    <br>
+    <div class="breadcrumb" style="text-align: center;background-color: steelblue;color: white;">PDF Shaing</div>
+    <div>
+      <button class="btn btn-info" onclick="PreviousbuttonClicked();" id="prev">Previous</button>
+      <button class="btn btn-info" onclick="NextbuttonClicked();" id="next">Next</button>
 
-    <button id="zoominbutton" onclick="ZoominClicked()" type="button">zoom in</button>
-    <button id="zoomoutbutton" onclick="ZoomoutClicked()" type="button">zoom out</button>
-    <input type="hidden" id="currpos"> &nbsp; &nbsp;
-    <span>Page:
-      <span id="page_num"></span> /
-      <span id="page_count"></span>
-    </span>
+      <button class="btn btn-info" id="zoominbutton" onclick="ZoominClicked()" type="button"><i class="fa fa-search-plus"></i></button>
+      <button class="btn btn-info" id="zoomoutbutton" onclick="ZoomoutClicked()" type="button"><i class="fa fa-search-minus"></i></button>
+      <input type="hidden" id="currpos"> &nbsp; &nbsp;
+      <span>Page:
+        <span id="page_num"></span> /
+        <span id="page_count"></span>
+      </span>
 
-  </div>
-  <div onscroll="Scroll()" id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;">
-    <canvas id="the-canvas"></canvas>
-  </div>
+    </div>
+    <div onscroll="Scroll()" id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;">
+      <canvas id="the-canvas"></canvas>
+    </div>
+
+</div>
 
 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
