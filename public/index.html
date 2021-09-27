@@ -18,6 +18,18 @@
       border: 1px solid black;
       direction: ltr;
     }
+
+    body{
+      background-color: rgb(78, 70, 85);
+    }
+
+    #page_num{
+       color: chartreuse;
+    }
+
+    #page_count{
+      color: cornsilk;
+    }
   </style>
 </head>
 
@@ -28,21 +40,22 @@
 
   <div class="container">
     <br>
-    <div class="breadcrumb" style="text-align: center;background-color: steelblue;color: white;">PDF Shaing</div>
+    <div class="breadcrumb" style="text-align: center;background-color: steelblue;color: white;"><h3>PDF Shaing</h3></div>
     <div>
       <button class="btn btn-info" onclick="PreviousbuttonClicked();" id="prev">Previous</button>
       <button class="btn btn-info" onclick="NextbuttonClicked();" id="next">Next</button>
 
-      <button class="btn btn-info" id="zoominbutton" onclick="ZoominClicked()" type="button"><i class="fa fa-search-plus"></i></button>
-      <button class="btn btn-info" id="zoomoutbutton" onclick="ZoomoutClicked()" type="button"><i class="fa fa-search-minus"></i></button>
+      <button class="btn btn-outline-info" id="zoominbutton" onclick="ZoominClicked()" type="button"><i class="fa fa-search-plus"></i></button>
+      <button class="btn btn-outline-info" id="zoomoutbutton" onclick="ZoomoutClicked()" type="button"><i class="fa fa-search-minus"></i></button>
       <input type="hidden" id="currpos"> &nbsp; &nbsp;
-      <span>Page:
+      <span style="color: burlywood;">Page:
         <span id="page_num"></span> /
         <span id="page_count"></span>
       </span>
 
     </div>
-    <div onscroll="Scroll()" id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;">
+    <br>
+    <div onscroll="Scroll()" id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;margin-top: 10px;overflow: scroll;">
       <canvas id="the-canvas"></canvas>
     </div>
 
