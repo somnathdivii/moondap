@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Room</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+  <style>
+    #the-canvas {
+      border: 1px solid rgb(189, 73, 73);
+      direction: ltr;
+    }
+
+    body{
+      background-color: rgb(140, 135, 145);
+    }
+
+    #page_num{
+       color: chartreuse;
+    }
+
+    #page_count{
+      color: cornsilk;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- <p id="buttonCount">PDF Shaing</p> -->
+  <!-- <button onclick="buttonClicked()">Click me</button> -->
+
+  <div class="container">
+    <br>
+    <div class="breadcrumb" style="text-align: center;background-color: steelblue;color: white;"><h3>PDF Shaing</h3></div>
+    <div id="my_chk_div">
+      <input type="checkbox" id="my_chk" onclick="get_control_by_own()" checked/> Follow Presenter
+    </div>
+    
+    <div id="controls">
+      <button class="btn btn-info" onclick="PreviousbuttonClicked();" id="prev">Previous</button>
+      <button class="btn btn-info" onclick="NextbuttonClicked();" id="next">Next</button>
+
+      <button class="btn btn-outline-info" id="zoominbutton" onclick="ZoominClicked()" type="button"><i class="fa fa-search-plus"></i></button>
+      <button class="btn btn-outline-info" id="zoomoutbutton" onclick="ZoomoutClicked()" type="button"><i class="fa fa-search-minus"></i></button>
+      <input type="hidden" id="currpos"> &nbsp; &nbsp;
+      <span style="color: burlywood;">Page:
+        <span id="page_num"></span> /
+        <span id="page_count"></span>
+      </span>
+
+    </div>
+    <br>
+    <div onscroll="Scroll()" id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;margin-top: 10px;overflow: scroll;">
+      <canvas id="the-canvas"></canvas>
+      <input type="hidden" id="room_id" value="1"/>
+      <input type="hidden" id="role_id" value=""/>
+    </div>
+
+</div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+
+
+
+  <script>
+    var socket = io.connect();
+
+    var scrollPosition;
+    var admin = true;
+    const scrollableElement = document.querySelector("#scrollableElement");
+
+    var role = '';
+    var chk_status = 0;
+
+
+    function NextbuttonClicked() {
+      var role = document.getElementById('role_id').value;
+      console.log("Role is : " + role);
+
+
+      if($("#my_chk").prop("checked") == true)
+      {
+          chk_status = 1;
+          role = 'host';
+      }
+      else
+      {
+          chk_status = 0;
+          role = 'viewer';
+      }
+
+
+      var page_cnt = document.getElementById('page_count').innerText;
+      if(role == 'host')
+      {
+         //document.getElementById("controls").style.display = "block"; 
+         socket.emit('nextclicked', page_cnt,role,chk_status);
+      }
+      else
+      {
+        //document.getElementById("controls").style.display = "none"; 
+      }
+      //socket.emit('nextclicked', page_cnt,role);
+    }
+
+    function PreviousbuttonClicked() {
+      var role = document.getElementById('role_id').value;
+
+      if($("#my_chk").prop("checked") == true)
+      {
+          chk_status = 1;
+          role = 'host';
+          document.getElementById('role_id').value = role;
+          
+      }
+      else
+      {
+          chk_status = 0;
+          role = 'viewer';
+          document.getElementById('role_id').value = role;
+      }
+
+
+      if(role == 'host')
+      {
+         //document.getElementById("controls").style.display = "block"; 
+         socket.emit('previousclicked',role,chk_status);
+      }
+      else
+      {
+        //document.getElementById("controls").style.display = "none"; 
+      }
+      //socket.emit('previousclicked',role);
+    }
+
+
+    function ZoominClicked() {
+      socket.emit('zoominclicked');
+    }
+
+    function ZoomoutClicked() {
+      socket.emit('zoomoutclicked');
+    }
+
+
+    // scrollableElement.addEventListener("scroll", event => {
+    //   scrollPosition = scrollY;
+    //   socket.emit('scrolled', scrollPosition);
+    // });
+    function Scroll() {
+      //console.log('gfsfdsf');
+      if (admin == true) {
+        var tempScrollTop = $(scrollableElement).scrollTop();
+        scrollPosition = tempScrollTop.toString();
+
+        var role = document.getElementById('role_id').value;
+        socket.emit('scrolled', scrollPosition,role);
+
+        console.log(scrollPosition);
+      }
+
+    }
+
+
+    // mouse selection
+
+    $(document).ready(function(){
+
+      var room_id = document.getElementById('room_id').value;
+      socket.emit('get_room_id', room_id);
+
+      $('input[type="checkbox"]').click(function(){
+            if($(this).prop("checked") == true)
+            {
+                console.log("checkbox checked..");
+                document.getElementById("controls").style.display = "none"; 
+                var room_id = document.getElementById('room_id').value;
+                socket.emit('get_room_id', room_id);
+            }
+            else if($(this).prop("checked") == false)
+            {
+                console.log("checkbox unchecked..");
+                document.getElementById("controls").style.display = "block"; 
+                var room_id = document.getElementById('room_id').value;
+                //socket.emit('get_room_id', room_id);
+                var filePath = "/test.pdf";
+                operate_pdf_by_own(filePath);
+            }
+        });
+
+
+
+    });
+
+    $(document).on('mouseup',function(event){
+        //socket.emit('mouse_activity',{x:event.pageX,y:event.pageY});
+    });
+
+    // End
+
+    function get_control_by_own()
+    {
+      if (document.getElementById('my_chk').checked) 
+      {
+         socket.connect();
+         window.location.reload();
+         console.log("checkbox checked..");
+         var room_id = document.getElementById('room_id').value;
+         socket.emit('get_room_id', room_id);
+
+          var tempScrollTop = $(scrollableElement).scrollTop();
+          scrollPosition = tempScrollTop.toString();
+
+          var role = document.getElementById('role_id').value;
+          socket.emit('scrolled', scrollPosition,role);
+      }
+      else
+      {
+          console.log("checkbox unchecked..");
+          document.getElementById("controls").style.display = "block"; 
+          var room_id = document.getElementById('room_id').value;
+          //socket.emit('get_room_id', room_id);
+          var filePath = "/public/test.pdf";
+          socket.disconnect();
+          operate_pdf_by_own(filePath);
+      }
+        
+    }
+
+
+    //when we receive numClients, do this 
+    socket.on('sendfile', function (data) {
+      // document.getElementById("buttonCount").innerHTML = data;
+      var url = data.filePath;
+      // Loaded via <script> tag, create shortcut to access PDF.js exports.
+      var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+      // The workerSrc property shall be specified.
+      pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+      var pdfDoc = null,
+        pageNum = data.clickCount,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.8,
+        canvas = document.getElementById('the-canvas'),
+        ctx = canvas.getContext('2d');
+
+        role = data.role;
+
+      document.getElementById('role_id').value = role;
+
+      if(role == 'host')
+      {
+          document.getElementById('my_chk_div').style.display = "none";
+          document.getElementById("controls").style.display = "block"; 
+      }
+      else
+      {
+          document.getElementById('my_chk_div').style.display = "block";
+          document.getElementById("controls").style.display = "none"; 
+          if (document.getElementById('my_chk').checked) 
+          {
+             document.getElementById("controls").style.display = "none"; 
+          }
+          else
+          {
+              document.getElementById("controls").style.display = "block"; 
+          }
+      }
+
+
+      function renderPage(num) {
+
+        pageRendering = true;
+
+        // Using promise to fetch the page
+        pdfDoc.getPage(num).then(function (page) {
+          var viewport = page.getViewport({ scale: scale });
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          // Render PDF page into canvas context
+          var renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+          };
+          var renderTask = page.render(renderContext);
+
+          // Wait for rendering to finish
+          renderTask.promise.then(function () {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+              // New page rendering is pending
+              renderPage(pageNumPending);
+              pageNumPending = null;
+            }
+          });
+        });
+
+        // Update page counters
+        document.getElementById('page_num').textContent = num;
+      }
+
+      /**
+       * If another page rendering in progress, waits until the rendering is
+       * finised. Otherwise, executes rendering immediately.
+       */
+      function queueRenderPage(num) {
+        if (pageRendering) {
+          pageNumPending = num;
+        } else {
+          renderPage(num);
+        }
+      }
+
+
+      pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+        // Initial/first page rendering
+        renderPage(pageNum);
+      });
+    });
+
+
+    socket.on('buttonUpdate', function (data) {
+
+      var url = data.filePath;
+      var pageNum = data.clickCount;
+      var pageNumPending = null;
+      var scale = data.scale;
+      var canvas = document.getElementById('the-canvas');
+      var ctx = canvas.getContext('2d');
+      var shownPdf;
+
+      function renderPage(pageNum) {
+
+        pageRendering = true;
+        // Using promise to fetch the page
+        pdfDoc.getPage(pageNum).then(function (page) {
+
+          pageRendering = true;
+          var viewport = page.getViewport({ scale: scale });
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          // Render PDF page into canvas context
+          var renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+          };
+          var renderTask = page.render(renderContext);
+
+          // Wait for rendering to finish
+          renderTask.promise.then(function () {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+              // New page rendering is pending
+              renderPage(pageNumPending);
+              pageNumPending = null;
+            }
+          });
+        });
+
+        // Update page counters
+        document.getElementById('page_num').textContent = pageNum;//num;
+      }
+
+      //console.log(pageRendering);
+
+      /**
+       * If another page rendering in progress, waits until the rendering is
+       * finised. Otherwise, executes rendering immediately.
+       */
+      function queueRenderPage(num) {
+        if (pageRendering) {
+          pageNumPending = num;
+        } else {
+          renderPage(num);
+        }
+      }
+
+      /**
+       * Displays previous page.
+       */
+      function onPrevPage() {
+        if (pageNum <= 1) {
+          return;
+        }
+        pageNum--;
+        queueRenderPage(pageNum);
+
+        if (pageNum == 1) {
+          document.getElementById('prev').visibility = "hidden";
+        }
+      }
+      // document.getElementById('prev').addEventListener('click', onPrevPage);
+
+      /**
+       * Displays next page.
+       */
+      function onNextPage() {
+        if (pageNum >= pdfDoc.numPages) {
+          return;
+        }
+        pageNum++;
+        queueRenderPage(pageNum);
+
+        if (pageNum == pdfDoc.numPages) {
+          document.getElementById('next').visibility = "hidden";
+        }
+      }
+      // document.getElementById('next').addEventListener('click', onNextPage);
+
+      // var zoominbutton = document.getElementById("zoominbutton");
+      // zoominbutton.onclick = 
+      function zoominbutton() {
+        scale = scale + 0.25;
+        // displayPage(shownPdf, pageNum);
+        queueRenderPage(pageNum);
+      }
+      // document.getElementById('zoominbutton').addEventListener('click', zoominbutton);
+
+      // var zoomoutbutton = document.getElementById("zoomoutbutton");
+      // zoomoutbutton.onclick = 
+      function zoomoutbutton() {
+        if (scale <= 0.25) {
+          return;
+        }
+        scale = scale - 0.25;
+        // displayPage(shownPdf, pageNum);
+        queueRenderPage(pageNum);
+      }
+      // document.getElementById('zoomoutbutton').addEventListener('click', zoomoutbutton);
+
+
+
+
+
+      pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page_count').textContent = pdfDoc.numPages;
+        renderPage(pageNum);
+      });
+
+    });
+
+
+    socket.on('scrolling', function (data) {
+
+      var ids = socket.id;
+
+
+      console.log(data.ids, ids)
+      //console.log("")
+
+      if (data.ids != ids) {
+        console.log("DO scroll")
+        admin = false;
+        $(scrollableElement).scrollTop(data.data);
+        setTimeout(() => {
+          admin = true;
+        }, 300);
+      } else {
+        console.log("Do nothing !")
+        admin = true;
+        return;
+      }
+      // $(scrollableElement).scrollTop(data);
+      // }, 1000)
+
+      // scrollableElement.scrollTop=data;
+
+    });
+
+    function operate_pdf_by_own(filePath)
+    {
+              var url = filePath;
+
+              // Loaded via <script> tag, create shortcut to access PDF.js exports.
+              var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+              // The workerSrc property shall be specified.
+              pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+              var pdfDoc = null,
+                  pageNum = 1,
+                  pageRendering = false,
+                  pageNumPending = null,
+                  scale = 1.8,
+                  canvas = document.getElementById('the-canvas'),
+                  ctx = canvas.getContext('2d');
+
+              /**
+               * Get page info from document, resize canvas accordingly, and render page.
+               * @param num Page number.
+               */
+              function renderPage(num) {
+                pageRendering = true;
+                // Using promise to fetch the page
+                pdfDoc.getPage(num).then(function(page) {
+                  var viewport = page.getViewport({scale: scale});
+                  canvas.height = viewport.height;
+                  canvas.width = viewport.width;
+
+                  // Render PDF page into canvas context
+                  var renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                  };
+                  var renderTask = page.render(renderContext);
+
+                  // Wait for rendering to finish
+                  renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                      // New page rendering is pending
+                      renderPage(pageNumPending);
+                      pageNumPending = null;
+                    }
+                  });
+                });
+
+                // Update page counters
+                document.getElementById('page_num').textContent = num;
+              }
+
+              /**
+               * If another page rendering in progress, waits until the rendering is
+               * finised. Otherwise, executes rendering immediately.
+               */
+              function queueRenderPage(num) {
+                if (pageRendering) {
+                  pageNumPending = num;
+                } else {
+                  renderPage(num);
+                }
+              }
+
+              /**
+               * Displays previous page.
+               */
+              function onPrevPage() {
+                if (pageNum <= 1) {
+                  return;
+                }
+                pageNum--;
+                queueRenderPage(pageNum);
+              }
+              document.getElementById('prev').addEventListener('click', onPrevPage);
+
+              /**
+               * Displays next page.
+               */
+              function onNextPage() {
+                if (pageNum >= pdfDoc.numPages) {
+                  return;
+                }
+                pageNum++;
+                queueRenderPage(pageNum);
+              }
+              document.getElementById('next').addEventListener('click', onNextPage);
+
+        /**
+         * Asynchronously downloads PDF.
+         */
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+          pdfDoc = pdfDoc_;
+          document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+          // Initial/first page rendering
+          renderPage(pageNum);
+        });
+
+    }
+
+
+  </script>
+</body>
+
+</html>

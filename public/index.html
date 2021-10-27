@@ -14,22 +14,9 @@
   <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 
   <style>
-    #the-canvas {
-      border: 1px solid black;
-      direction: ltr;
-    }
-
-    body{
-      background-color: rgb(78, 70, 85);
-    }
-
-    #page_num{
-       color: chartreuse;
-    }
-
-    #page_count{
-      color: cornsilk;
-    }
+      .col-md-4{
+          margin-bottom: 5 px !important;
+      }
   </style>
 </head>
 
@@ -41,25 +28,39 @@
   <div class="container">
     <br>
     <div class="breadcrumb" style="text-align: center;background-color: steelblue;color: white;"><h3>PDF Shaing</h3></div>
-    <div>
-      <button class="btn btn-info" onclick="PreviousbuttonClicked();" id="prev">Previous</button>
-      <button class="btn btn-info" onclick="NextbuttonClicked();" id="next">Next</button>
-
-      <button class="btn btn-outline-info" id="zoominbutton" onclick="ZoominClicked()" type="button"><i class="fa fa-search-plus"></i></button>
-      <button class="btn btn-outline-info" id="zoomoutbutton" onclick="ZoomoutClicked()" type="button"><i class="fa fa-search-minus"></i></button>
-      <input type="hidden" id="currpos"> &nbsp; &nbsp;
-      <span style="color: burlywood;">Page:
-        <span id="page_num"></span> /
-        <span id="page_count"></span>
-      </span>
-
-    </div>
+    <h1>Login</h1>
     <br>
-    <div onscroll="Scroll()" id="scrollableElement" class="scrollableElement" style="height: 500px ;overflow: auto;margin-top: 10px;overflow: scroll;">
-      <canvas id="the-canvas"></canvas>
-    </div>
 
-</div>
+    <form action="/" method="POST">
+
+        <div class="row">
+            <div class="col-md-2">
+                <label>Email ID</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="email" name="email" class="form-control" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+              <label>Password</label>
+            </div>
+            <div class="col-md-4">
+                <input type="password" id="pwd" name="pwd" class="form-control" autocomplete="off"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              
+            </div>
+            <div class="col-md-4">
+                <input type="submit" id="submit" name="submit" class="btn btn-info"/>
+            </div>
+          </div>
+
+    </form>
+
+  </div>
 
 
 
@@ -74,272 +75,19 @@
 
   <script>
     var socket = io.connect();
+    // mouse selection
 
-    var scrollPosition;
-    var admin = true;
-    const scrollableElement = document.querySelector("#scrollableElement");
+    $(document).ready(function(){
 
-
-    function NextbuttonClicked() {
-      var page_cnt = document.getElementById('page_count').innerText;
-      socket.emit('nextclicked', page_cnt);
-    }
-
-    function PreviousbuttonClicked() {
-      socket.emit('previousclicked');
-    }
-
-
-    function ZoominClicked() {
-      socket.emit('zoominclicked');
-    }
-
-    function ZoomoutClicked() {
-      socket.emit('zoomoutclicked');
-    }
-
-
-    // scrollableElement.addEventListener("scroll", event => {
-    //   scrollPosition = scrollY;
-    //   socket.emit('scrolled', scrollPosition);
-    // });
-    function Scroll() {
-      console.log('gfsfdsf');
-      if (admin == true) {
-        var tempScrollTop = $(scrollableElement).scrollTop();
-        scrollPosition = tempScrollTop.toString();
-
-        socket.emit('scrolled', scrollPosition);
-
-        console.log(scrollPosition);
-      }
-
-    }
-
-
-    //when we receive numClients, do this 
-    socket.on('sendfile', function (data) {
-      // document.getElementById("buttonCount").innerHTML = data;
-      var url = data.filePath;
-      // Loaded via <script> tag, create shortcut to access PDF.js exports.
-      var pdfjsLib = window['pdfjs-dist/build/pdf'];
-
-      // The workerSrc property shall be specified.
-      pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
-
-      var pdfDoc = null,
-        pageNum = data.clickCount,
-        pageRendering = false,
-        pageNumPending = null,
-        scale = 1.8,
-        canvas = document.getElementById('the-canvas'),
-        ctx = canvas.getContext('2d');
-
-
-      function renderPage(num) {
-
-        pageRendering = true;
-
-        // Using promise to fetch the page
-        pdfDoc.getPage(num).then(function (page) {
-          var viewport = page.getViewport({ scale: scale });
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-
-          // Render PDF page into canvas context
-          var renderContext = {
-            canvasContext: ctx,
-            viewport: viewport
-          };
-          var renderTask = page.render(renderContext);
-
-          // Wait for rendering to finish
-          renderTask.promise.then(function () {
-            pageRendering = false;
-            if (pageNumPending !== null) {
-              // New page rendering is pending
-              renderPage(pageNumPending);
-              pageNumPending = null;
-            }
-          });
-        });
-
-        // Update page counters
-        document.getElementById('page_num').textContent = num;
-      }
-
-      /**
-       * If another page rendering in progress, waits until the rendering is
-       * finised. Otherwise, executes rendering immediately.
-       */
-      function queueRenderPage(num) {
-        if (pageRendering) {
-          pageNumPending = num;
-        } else {
-          renderPage(num);
-        }
-      }
-
-
-      pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
-        pdfDoc = pdfDoc_;
-        document.getElementById('page_count').textContent = pdfDoc.numPages;
-
-        // Initial/first page rendering
-        renderPage(pageNum);
-      });
+      var room_id = document.getElementById('room_id').value;
+      socket.emit('get_room_id', room_id);
     });
 
-
-    socket.on('buttonUpdate', function (data) {
-
-      var url = data.filePath;
-      var pageNum = data.clickCount;
-      var pageNumPending = null;
-      var scale = data.scale;
-      var canvas = document.getElementById('the-canvas');
-      var ctx = canvas.getContext('2d');
-      var shownPdf;
-
-      function renderPage(pageNum) {
-
-        pageRendering = true;
-        // Using promise to fetch the page
-        pdfDoc.getPage(pageNum).then(function (page) {
-
-          pageRendering = true;
-          var viewport = page.getViewport({ scale: scale });
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-
-          // Render PDF page into canvas context
-          var renderContext = {
-            canvasContext: ctx,
-            viewport: viewport
-          };
-          var renderTask = page.render(renderContext);
-
-          // Wait for rendering to finish
-          renderTask.promise.then(function () {
-            pageRendering = false;
-            if (pageNumPending !== null) {
-              // New page rendering is pending
-              renderPage(pageNumPending);
-              pageNumPending = null;
-            }
-          });
-        });
-
-        // Update page counters
-        document.getElementById('page_num').textContent = pageNum;//num;
-      }
-
-      //console.log(pageRendering);
-
-      /**
-       * If another page rendering in progress, waits until the rendering is
-       * finised. Otherwise, executes rendering immediately.
-       */
-      function queueRenderPage(num) {
-        if (pageRendering) {
-          pageNumPending = num;
-        } else {
-          renderPage(num);
-        }
-      }
-
-      /**
-       * Displays previous page.
-       */
-      function onPrevPage() {
-        if (pageNum <= 1) {
-          return;
-        }
-        pageNum--;
-        queueRenderPage(pageNum);
-
-        if (pageNum == 1) {
-          document.getElementById('prev').visibility = "hidden";
-        }
-      }
-      // document.getElementById('prev').addEventListener('click', onPrevPage);
-
-      /**
-       * Displays next page.
-       */
-      function onNextPage() {
-        if (pageNum >= pdfDoc.numPages) {
-          return;
-        }
-        pageNum++;
-        queueRenderPage(pageNum);
-
-        if (pageNum == pdfDoc.numPages) {
-          document.getElementById('next').visibility = "hidden";
-        }
-      }
-      // document.getElementById('next').addEventListener('click', onNextPage);
-
-      // var zoominbutton = document.getElementById("zoominbutton");
-      // zoominbutton.onclick = 
-      function zoominbutton() {
-        scale = scale + 0.25;
-        // displayPage(shownPdf, pageNum);
-        queueRenderPage(pageNum);
-      }
-      // document.getElementById('zoominbutton').addEventListener('click', zoominbutton);
-
-      // var zoomoutbutton = document.getElementById("zoomoutbutton");
-      // zoomoutbutton.onclick = 
-      function zoomoutbutton() {
-        if (scale <= 0.25) {
-          return;
-        }
-        scale = scale - 0.25;
-        // displayPage(shownPdf, pageNum);
-        queueRenderPage(pageNum);
-      }
-      // document.getElementById('zoomoutbutton').addEventListener('click', zoomoutbutton);
-
-
-
-
-
-      pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
-        pdfDoc = pdfDoc_;
-        document.getElementById('page_count').textContent = pdfDoc.numPages;
-        renderPage(pageNum);
-      });
-
+    $(document).on('mouseup',function(event){
+        //socket.emit('mouse_activity',{x:event.pageX,y:event.pageY});
     });
 
-
-    socket.on('scrolling', function (data) {
-
-      var ids = socket.id;
-
-
-      console.log(data.ids, ids)
-      console.log("")
-
-      if (data.ids != ids) {
-        console.log("DO scroll")
-        admin = false;
-        $(scrollableElement).scrollTop(data.data);
-        setTimeout(() => {
-          admin = true;
-        }, 300);
-      } else {
-        console.log("Do nothing !")
-        admin = true;
-        return;
-      }
-      // $(scrollableElement).scrollTop(data);
-      // }, 1000)
-
-      // scrollableElement.scrollTop=data;
-
-    });
+    // End
 
 
   </script>
