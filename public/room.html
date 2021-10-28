@@ -64,6 +64,9 @@
       <canvas id="the-canvas"></canvas>
       <input type="hidden" id="room_id" value="1"/>
       <input type="hidden" id="role_id" value=""/>
+      <input type="hidden" id="curr_file" value=""/>
+      <input type="hidden" id="current_page" value=""/>
+      <input type="hidden" id="current_scale" value=""/>
     </div>
 
 </div>
@@ -88,6 +91,11 @@
 
     var role = '';
     var chk_status = 0;
+
+    var current_file = '';
+    var current_page = '';
+    var current_scale = '';
+    var curent_position = '';
 
 
     function NextbuttonClicked() {
@@ -187,12 +195,17 @@
       socket.emit('get_room_id', room_id);
 
       $('input[type="checkbox"]').click(function(){
+
             if($(this).prop("checked") == true)
             {
                 console.log("checkbox checked..");
                 document.getElementById("controls").style.display = "none"; 
+                //document.getElementById('current_page').value = current_page;
                 var room_id = document.getElementById('room_id').value;
                 socket.emit('get_room_id', room_id);
+
+                console.log(curent_position);
+                
             }
             else if($(this).prop("checked") == false)
             {
@@ -200,8 +213,13 @@
                 document.getElementById("controls").style.display = "block"; 
                 var room_id = document.getElementById('room_id').value;
                 //socket.emit('get_room_id', room_id);
-                var filePath = "/test.pdf";
-                operate_pdf_by_own(filePath);
+                //var filePath = "/test.pdf";
+                var page_no = document.getElementById('page_count').innerHTML;
+                document.getElementById('curr_file').value = current_file;
+                document.getElementById('current_page').value = current_page;
+                document.getElementById('current_scale').value = current_scale;
+                document.getElementById('page_num').innerHTML = current_page;
+                operate_pdf_by_own(current_file,current_page,current_scale);
             }
         });
 
@@ -223,6 +241,7 @@
          window.location.reload();
          console.log("checkbox checked..");
          var room_id = document.getElementById('room_id').value;
+         document.getElementById('current_page').value = current_page;
          socket.emit('get_room_id', room_id);
 
           var tempScrollTop = $(scrollableElement).scrollTop();
@@ -237,9 +256,13 @@
           document.getElementById("controls").style.display = "block"; 
           var room_id = document.getElementById('room_id').value;
           //socket.emit('get_room_id', room_id);
-          var filePath = "/public/test.pdf";
+          //var filePath = "/test.pdf";
           socket.disconnect();
-          operate_pdf_by_own(filePath);
+          var curr_file = document.getElementById('curr_file').value;
+          var curr_page = document.getElementById('current_page').value;
+          document.getElementById('page_num').innerHTML = curr_page;
+          var curr_scale = document.getElementById('current_scale').value;
+          operate_pdf_by_own(curr_file,curr_page,curr_scale);
       }
         
     }
@@ -249,6 +272,9 @@
     socket.on('sendfile', function (data) {
       // document.getElementById("buttonCount").innerHTML = data;
       var url = data.filePath;
+      current_file = data.filePath;
+      current_page = data.clickCount;
+      curent_position = data.position;
       // Loaded via <script> tag, create shortcut to access PDF.js exports.
       var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
@@ -351,6 +377,10 @@
       var canvas = document.getElementById('the-canvas');
       var ctx = canvas.getContext('2d');
       var shownPdf;
+
+      current_scale = data.scale;
+      current_page = data.clickCount;
+      document.getElementById('current_page').value = data.clickCount;
 
       function renderPage(pageNum) {
 
@@ -492,7 +522,7 @@
 
     });
 
-    function operate_pdf_by_own(filePath)
+    function operate_pdf_by_own(filePath,current_page,current_scale)
     {
               var url = filePath;
 
@@ -503,10 +533,10 @@
               pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
               var pdfDoc = null,
-                  pageNum = 1,
+                  pageNum = current_page,
                   pageRendering = false,
                   pageNumPending = null,
-                  scale = 1.8,
+                  scale = 1.8,//current_scale,
                   canvas = document.getElementById('the-canvas'),
                   ctx = canvas.getContext('2d');
 
@@ -590,6 +620,8 @@
           // Initial/first page rendering
           renderPage(pageNum);
         });
+
+        $(document).trigger('scroll');
 
     }
 

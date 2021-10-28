@@ -7,8 +7,8 @@ const io = require('socket.io')(http);
 // const ss = require('socket.io-stream');
 const port = process.env.PORT || 3000;
 
-const mysql = require('mysql2');
-//const mysql = require('mysql');
+//const mysql = require('mysql2');
+const mysql = require('mysql');
 const bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 var session  = require('express-session');
@@ -25,13 +25,13 @@ app.use(express.static(__dirname + '/public'));
 
 const conn = mysql.createConnection({
     host: "localhost",
-    //user: "root",
-    //password: "",
-    user: "moondap",
-    password: "v8YCj~R/8gL$cU",
+    user: "root",
+    password: "",
+    /* user: "moondap",
+    password: "v8YCj~R/8gL$cU", */
     database: "moondap",
-    socketPath: "/var/run/mysqld/mysqld.sock",
-    insecureAuth : true
+    //socketPath: "/var/run/mysqld/mysqld.sock",
+    //insecureAuth : true
 });
 
 
@@ -193,6 +193,7 @@ var clickCount = 1;
 var scale = 1.8;
 var role = '';
 var chk_status = '';
+var position = '';
 
 
 
@@ -296,7 +297,9 @@ io.on('connection', function (socket) {
        if(role == 'host')
       { 
         io.emit('scrolling', {data,ids});
+        position = data;
       }
+      position = data;
        //io.emit('scrolling', {data,ids});
   });
 
@@ -321,7 +324,7 @@ io.on('connection', function (socket) {
        }
        res.sendFile(__dirname + '/public/room.html');
        var filePath = "/test.pdf";
-       io.to(data).emit("sendfile", { filePath, clickCount, role});  
+       io.to(data).emit("sendfile", { filePath, clickCount, role, position});  
     });
 
   });
