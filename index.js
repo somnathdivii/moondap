@@ -16,7 +16,8 @@ var session = require('express-session');
 app.use(express.json());
 app.use(cookieParser());
 
-var sess = '';
+var filePath = '';
+var user_id = '';
 
 //const encoder = bodyParser.urlencoded();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,11 +28,15 @@ const conn = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  /* user: "moondap",
-  password: "v8YCj~R/8gL$cU", */
-  database: "moondap1",
-  //socketPath: "/var/run/mysqld/mysqld.sock",
-  //insecureAuth : true
+  user: "root",
+  password: "",
+  database: "moondap",
+
+  /* user: "demonodeusr",
+  password: "Djxx$qlu61",
+  database: "demonodedb",
+  socketPath: "/var/run/mysqld/mysqld.sock",
+  insecureAuth : true */
 });
 
 
@@ -79,7 +84,11 @@ app.post("/", function (req, res) {
       req.session.isAuth = true;
       req.session.user_id = result[0].id;
       req.session.email = result[0].email;
-      res.redirect("/home");
+      user_id = result[0].id;
+
+      console.log("Login ID : " + user_id);
+      res.redirect("/home?uid=" + user_id);
+      
       //res.render('home',{title:'Home'});
     }
     else {
@@ -125,7 +134,7 @@ app.post("/create_room", function (req, res) {
       conn.query(sql);
       req.session.role = 'host';
       //console.log(req.session);
-      res.redirect("/home");
+      res.redirect("/home?uid="+user_id);
     }
 
   })
@@ -195,23 +204,20 @@ io.on('connection', function (socket) {
 
   //socket.to("some room").emit("some event");
 
+  /* console.log("User ID = " + user_id);
+  socket.emit("get_user_id", user_id); */
+
   var ids = socket.id;
   //console.log(ids);
-  var filePath = "/test.pdf";
+  filePath = "/test.pdf";
 
   console.log('No of IDs  =  ' + ids.length);
+
 
   socket.emit("sendfile", { filePath, clickCount, role });
 
 
   socket.on('nextclicked', function (data, role, chk_status) {
-
-    // console.log('test'+ui);
-    /* var page_cnt = data;
-    if (clickCount >= page_cnt) {
-      return false;
-    }
-    clickCount++; */
 
     // var filePath = "/sample.pdf";
     console.log("Status is : " + chk_status);
@@ -295,13 +301,11 @@ io.on('connection', function (socket) {
     console.log(data);
   })
 
-  socket.on('get_room_id', function (data) {
-
-    // console.log(current_page);
-    // console.log(clickCount);
-    console.log("current_page");
-    app.get('/home/' + data, isAuth, function (req, res) {
+  socket.on('get_room_id', function (data,uid)
+  {
+    app.get('/home/' + data , isAuth, function (req, res) {
       //res.redirect('room.html');
+      user_id = uid;
       role = req.session.role;
       //console.log(req.session);
       if (role != 'host') {
@@ -319,6 +323,44 @@ io.on('connection', function (socket) {
     });
 
   });
+
+
+  //-------------------------share own pdf----------------------------//
+
+  socket.on('get_own_pdf', function (room_id,role){
+
+    console.log("Current user ID : " + user_id);
+    
+    conn.query("select * from md_attachments where created_by = ? ", [user_id], function (error, result, fields) {
+
+      if (result.length > 0) {
+     
+        /* if(role == 'undefined')
+        {
+           role = "viewer";
+        } */
+
+        //role = "host";
+        
+        filePath = "/"+result[0].file_name;
+        fileType = result[0].file_type;
+        console.log("User ID : "+ user_id);
+        console.log("New File : "+ filePath);
+        console.log("Role : "+ role);
+        socket.emit("sendfile", { filePath, clickCount, role });
+      }
+      else 
+      {
+        console.log('Not Exists..');
+        //res.redirect("/home");
+      }
+  
+      //res.end();
+  
+    });
+
+  });
+  //------------------------------End----------------------------------//
 
 
 });

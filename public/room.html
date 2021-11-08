@@ -30,6 +30,14 @@
     #page_count {
       color: cornsilk;
     }
+
+    body.noscroll
+    {
+        position: fixed; 
+        overflow-y: scroll;
+        width: 100%;
+    }
+
   </style>
 </head>
 
@@ -73,7 +81,10 @@
       <input type="hidden" id="current_page" value="" />
       <input type="hidden" id="current_scale" value="" />
       <input type="hidden" id="current_scroll_pos" value="" />
+      <input type="hidden" id="user_id" value="" />
     </div>
+
+    <button type="button" id="share_document" class="btn btn-info" onclick="share_document()">Share own document</button>
 
   </div>
 
@@ -210,9 +221,7 @@
 
           console.log("curent_position");
           // var s_pos = document.getElementById('room_id').value;
-
-
-          
+        
 
           // document.getElementById('current_page').value = current_page;
           // document.getElementById('current_scale').value = current_scale;
@@ -301,6 +310,32 @@
         operate_pdf_by_own(curr_file, curr_page, curr_scale);
       }
 
+    }
+
+
+
+    function share_document()
+    {
+        discconn = false;
+        var room_id = document.getElementById('room_id').value;
+        document.getElementById('current_page').value = current_page;
+
+
+        console.log("Sharing document.....");
+        //socket.emit('get_room_id', room_id);
+
+        var role = document.getElementById('role_id').value;
+        var user_id = document.getElementById("user_id").value;
+        //var user_id = document.getElementById('user_id').value;
+        socket.emit("get_own_pdf",room_id,user_id,role);
+        
+        //window.location.reload(1);
+    }
+
+    function get_user_id(user_id)
+    {
+       document.getElementById('user_id').value = user_id;
+       console.log("User ID = " + user_id);
     }
 
 

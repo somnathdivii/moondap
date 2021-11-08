@@ -36,6 +36,7 @@
     <br>
 
     <input type="hidden" id="room_id" value="1"/>
+    <input type="hidden" id="user_id" value=""/>
 
     <a href="/home/1">Share Link</a>
     <br>
@@ -99,8 +100,14 @@
 
     $(document).ready(function(){
 
+      var urlParams = new URLSearchParams(window.location.search);
+      var user_id = urlParams.get('uid');
+
+      console.log("=====" + user_id);
+      document.getElementById("user_id").value = user_id;
+
       var room_id = document.getElementById('room_id').value;
-      socket.emit('get_room_id', room_id);
+      socket.emit('get_room_id', room_id, user_id);
     });
 
     $(document).on('mouseup',function(event){
