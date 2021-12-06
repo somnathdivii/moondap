@@ -1,0 +1,183 @@
+@mixin display-align-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin display-space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin display-start-between {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+@mixin display-justify-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin display-inline-justify-center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin display-justify-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin display-justify-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block
+}
+
+// button styles
+
+@mixin primary-button {
+  @include display-justify-center;
+  max-width: 576px;
+  width: 100%;
+  padding: 18px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  color: $white-FF;
+  background-color: $blue-01;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.05em;
+  height: 60px;
+  @media screen and (max-width: 768px){
+    font-size: 16px;
+    line-height: 20px;
+    padding: 12px;
+    height: 44px;
+  }
+  &:disabled,
+  &.disabled {
+    background-color: $grey-eo;
+    opacity: 1;
+    box-shadow: none;
+    cursor: no-drop;
+  }
+  &.blue-outline{
+    background: $white-FF;
+    border: solid 1px $blue-01;
+    color: $blue-01;
+    box-shadow: none;
+  }
+  &.black-outline{
+    background: $white-FF;
+    border: solid 1px $grey-A4;
+    color: $black-33;
+  }
+  &.grey-outline{
+    background: $white-FF;
+    border: solid 1px $grey-eo;
+    color: $grey-eo;
+    box-shadow: none;
+  }
+  &.red-primary-button{
+    background: $red-01;
+  }
+  &.orange-outline{
+    background: $white-FF;
+    border: solid 1px $orange-01;
+    color: $orange-01;
+  }
+  @media screen and (max-width: 768px){
+    max-width: 100%;
+  }
+}
+
+@mixin grey-button{
+  @include display-justify-center;
+  width: 108px;
+  height: 46px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.05em;
+  color: $black-33;
+  border: 1px solid $black-33;
+  border-radius: 8px;
+  padding: 15px;
+  &.disabled{
+    border: 1px solid $grey-A4;
+    color: $grey-A4;
+  }
+}
+
+@mixin small-button {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.05em;
+  width: 120px;
+  height: 41px;
+  @media screen and (max-width: 768px){
+    width: 100px;
+    height: 40px;
+  }
+}
+
+@mixin red-button {
+  @include display-justify-center;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.05em;
+  color: $white-FF;
+  background: $red-01;
+  padding: 12px;
+  &.outline{
+    color: $red-01;
+    background: $white-FF;
+    border: solid 1px $red-01;
+  }
+}
+
+@mixin xs-button {
+  @include display-justify-center;
+  width: 58px;
+  height: 23px;
+  border-radius: 30px;
+  padding: 5px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: -0.05em;
+  box-shadow: none;
+}
+@mixin grey-outline-btn {
+  @include display-justify-center;
+  border: 1px solid $grey-66;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 17px;
+  color: $grey-66;
+  padding: 12px 0px;
+  width: 120px;
+  background: $white-FF;
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}

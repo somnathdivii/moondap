@@ -1,0 +1,3 @@
+ALTER TABLE `rooms` ADD `room_no` VARCHAR(10) NULL AFTER `room_name`;
+
+ALTER TABLE `my_doc` CHANGE `active` `active` ENUM('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1';

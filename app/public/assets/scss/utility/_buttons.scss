@@ -1,0 +1,75 @@
+.primary-blue-button {
+  @include primary-button;
+}
+.small-grey-button {
+  @include grey-button;
+}
+.small-button {
+  @include small-button;
+}
+.red-button {
+  @include red-button;
+}
+.xs-button {
+  @include xs-button;
+}
+.small-grey-outline-button {
+  @include grey-outline-btn;
+}
+.main-btn-group {
+  margin-top: 50px;
+  button {
+    margin-top: 10px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+.btn-group {
+  @include display-align-center;
+  button {
+    margin-left: 16px;
+    &:first-child {
+      margin-left: 0;
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
+}
+button {
+  i {
+    margin-right: 5px;
+  }
+}
+.blue-btn {
+  background: $blue-01;
+  color: $white-FF;
+  border: solid 1px $blue-01;
+  &:hover {
+    color: $white-FF;
+  }
+  &.outline {
+    background: $white-FF;
+    color: $blue-01;
+    &:hover {
+      color: $blue-01;
+    }
+  }
+}
+.orange-btn {
+  background: $orange-01;
+  color: $white-FF;
+  border: solid 1px $orange-01;
+  &:hover {
+    color: $white-FF;
+  }
+  &.outline {
+    background: $white-FF;
+    color: $orange-01;
+    &:hover {
+      color: $orange-01;
+    }
+  }
+}
+

@@ -1,0 +1,1432 @@
+<%- include('../partials/headerworker'); -%>
+
+  <!-- body-container -->
+  <section class="container-big">
+    <div class="shared-room-wrap min-body">
+      <ul class="breadcrumb">
+        <li>
+          <a href="javascript:void(0)">홈</a>
+        </li>
+        <li class="active">
+          <a href="javascript:void(0)">공유방</a>
+        </li>
+      </ul>
+
+
+      <div class="two-column-screen">
+        <div class="left-shared-screen">
+          <div class="document-wrap">
+
+
+            <div id="my_chk_div">
+              <input type="checkbox" id="my_chk" onclick="get_control_by_own()" checked /> Follow Presenter
+            </div>
+            <div id="controls">
+              <button class="btn btn-info" onclick="PreviousbuttonClicked();" id="prev">Previous</button>
+              <button class="btn btn-info" onclick="NextbuttonClicked();" id="next">Next</button>
+
+              <button class="btn btn-outline-info" id="zoominbutton" onclick="ZoominClicked()" type="button">
+                <i class="fa fa-search-plus"></i>
+              </button>
+              <button class="btn btn-outline-info" id="zoomoutbutton" onclick="ZoomoutClicked()" type="button">
+                <i class="fa fa-search-minus"></i>
+              </button>
+
+
+
+
+              <input type="hidden" id="currpos"> &nbsp; &nbsp;
+              <span style="color: burlywood;">Page:
+                <span id="page_num"></span> /
+                <span id="page_count"></span>
+              </span>
+
+            </div>
+            <br>
+
+            <!-- <button type="button" id="share_document" class="btn btn-info" onclick="share_document()">Share own document</button> -->
+
+
+            <div onscroll="Scroll()" id="scrollableElement" class="scrollableElement"
+              style="height: 800px ;overflow: auto;margin-top: 10px;overflow: scroll;">
+              <canvas id="the-canvas"></canvas>
+            </div>
+            <div class="no-doc">
+              <p>공유중인 문서가 없습니다.</p>
+              <input type="hidden" id="room_id" />
+              <input type="hidden" id="user_id" value="<%=user_id %>" />
+              <input type="hidden" id="role_id" value="<%=user_role %>" />
+
+              <input type="hidden" id="sharing_user_type" value="<%=sharing_user_type %>" />
+              <input type="hidden" id="curr_file" value="" />
+              <input type="hidden" id="current_page" value="" />
+              <input type="hidden" id="current_scale" value="" />
+              <input type="hidden" id="current_scroll_pos" value="" />
+
+              <input type="hidden" id="name" value="<%=name %>" />
+              <input type="hidden" id="image" value="<%=image %>" />
+            </div>
+            <div class="document-footer">
+              <div class="floating-menu">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="icon-participant"></i>
+                      <span>참가자</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="icon-view-content"></i>
+                      <span>공유문서 모두 보기</span>
+                    </a>
+                  </li>
+                  <li class="withDrops">
+                    <div class="dropdown">
+                      <button class="dropdown-toggle" type="button" id="contentChange" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="icon-content-sharing-blue"></i>
+                        <span class="blue-text">컨텐츠 변경</span>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="contentChange">
+                        <a class="dropdown-item" data-toggle="modal" data-target="#inbox" href="javascript:void(0)">기기에서
+                          선택</a>
+                        <a class="dropdown-item" href="javascript:void(0)">내 문서함에서 선택</a>
+                        <a class="dropdown-item" href="javascript:void(0)">웹페이지 공유</a>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="icon-hand-raise"></i>
+                      <span>요청보기</span>
+                    </a>
+                  </li>
+                  <li class="withDrops">
+                    <div class="dropdown">
+                      <button class="dropdown-toggle" type="button" id="settingsD" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="icon-settings"></i>
+                        <span>설정</span>
+                      </button>
+                      <div class="dropdown-menu settings-drop" aria-labelledby="settingsD">
+                        <a class="dropdown-item" href="javascript:void(0)">모두 손 내리기</a>
+                        <div class="doc-allow">
+                          <p class="headDoc">참가자 문서 허용 설정</p>
+                          <div class="doc-allow-wrap">
+                            <div class="doc-allow-text">
+                              <div class="txtdoc">
+                                <p>상대방 문서함에 문서 자동 저장 및 외부 공유 허용</p>
+                              </div>
+                              <div class="custom-toggle">
+                                <label class="switch">
+                                  <input type="checkbox" checked>
+                                  <span class="slider round"></span>
+                                </label>
+                              </div>
+                            </div>
+                            <div class="doc-allow-text">
+                              <div class="txtdoc">
+                                <p>문서공유 권한 모두 있음</p>
+                              </div>
+                              <div class="custom-toggle">
+                                <label class="switch">
+                                  <input type="checkbox">
+                                  <span class="slider round"></span>
+                                </label>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="right-menu-screen">
+
+          <div class="top-box right-small-box">
+            <div class="mob-close">
+              <a href="javascript:void(0)">
+                <i class="icon-close-grey"></i>
+              </a>
+            </div>
+            <h3>UX(User Experience) Level 2 Class</h3>
+            <h4>공유방 ID : 00129486</h4>
+            <div class="share-grid">
+              <div class="share-box toolTip">
+                <i class="icon-share"></i>
+                <a href="javascript:void(0)" id="area_to_copy">
+                  <%= link %>
+                </a>
+                <span class="toolTiptext">링크가 복사되었습니다.</span>
+              </div>
+              <div class="Custom-dropdown">
+                <div class="QR-wrap" role="button">
+                  <img src="../assets/images/QR-code-small.png" />
+                  <img src="../assets/images/zoom-QR.png" class="Zoom-QR" />
+                </div>
+                <div class="dropdown-contents content-QR">
+                  <div class="close-wrap">
+                    <button type="button" class="close-btn">
+                      <img src="../assets/icons/icon-close-white.svg" /> </button>
+                  </div>
+                  <div class="dropdown-img-holder">
+                    <img src="../assets/images/QR-code-large.png" class="dropdown-element" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <button class="red-button" onclick="leave()" type="button">종료하기</button>
+          </div>
+
+          <div class="bottom-box right-small-box">
+            <h3>참가자</h3>
+
+            <div class="participant-box" id="participant_box">
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-section">
+        <h2>
+          <i class="icon-lightbulb"></i> Note
+        </h2>
+
+        <textarea class="form-control" id="note" placeholder="페이지에 기록하고 싶은 노트를 작성해주세요."></textarea>
+      </div>
+
+
+      <!-- Modal -->
+      <!-- <div class="modal fade" id="inbox" role="dialog">
+        <div class="modal-dialog modal-lg">
+        
+         
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                
+                <h2>Inbox</h2>
+                <hr><br>
+
+              <div class="row">
+
+                <% doc_data.forEach(function(docs){ %>   
+
+                       <div class="col-md-3">
+                         <a href="javascript:void(0);" onclick="share_new_pdf('<%= docs.id %>')"><%= docs.file_name %></a>
+                        </div>
+                 
+               <% }) %>
+
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              
+            </div>
+          </div>
+          
+        </div>
+      </div> -->
+      <!------------------end modal----------->
+
+      <!-- big modal -->
+      <div id="inbox" class="modal fade" role="dialog">
+        <div class="modal-dialog medium-modal">
+          <div class="modal-content">
+
+            <div class="documents-wrapper">
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                    aria-controls="nav-home" aria-selected="true">나의 발표 문서</a>
+                  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    aria-controls="nav-profile" aria-selected="false">공유받은 문서</a>
+                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                    aria-controls="nav-contact" aria-selected="false">공유받은 </a>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                  <div class="top-tab">
+                    <select name="cars" id="cars" class="icon-right-arrows">
+                      <option value="volvo">최신순</option>
+                      <option value="saab">최신순</option>
+                      <option value="opel">최신순</option>
+                      <option value="audi">최신순</option>
+                    </select>
+
+
+                    <div class="upload upload-btn">
+                      <div class="content-innter">
+                        <p><i class="icon-upload-white"></i>문서 업로드</p>
+                      </div>
+
+                      <form method="post" id="upload_doc" enctype="multipart/form-data">
+                          <input type="file" id="upload_document" name="myfile" class="file-upload">
+                      </form>
+
+
+                    </div>
+                  </div>
+
+                  <% doc_data.forEach(function(docs){ %>
+                    <div class="mydocuments-outer">
+                      <div class="documents-left">
+                        <%= docs.file_name %>
+                      </div>
+                      <ul>
+                        <li class="authorname"><span class="participnat-pic"><img
+                              src="assets/images/profile-pic.png"></span> Ronald 외 10명</li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                          <button class="blue-btn" onclick="share_new_pdf('<%= docs.id %>')">공유 중</button>
+                        </li>
+                      </ul>
+                    </div>
+                    <% }) %>
+
+                </div>
+
+
+
+
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <div class="top-tab">
+                    <select name="cars" id="cars">
+                      <option value="volvo">최신순</option>
+                      <option value="saab">최신순</option>
+                      <option value="opel">최신순</option>
+                      <option value="audi">최신순</option>
+                    </select>
+
+
+
+                  </div>
+
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="assets/images/profile-pic.png"></span>
+                        Author name</li>
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research Level2</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="assets/images/profile-pic.png"></span>
+                        Author name</li>
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="assets/images/profile-pic.png"></span>
+                        Author name</li>
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research Level2</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="assets/images/profile-pic.png"></span>
+                        Author name</li>
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="assets/images/profile-pic.png"></span>
+                        Author name</li>
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research Level2</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="assets/images/profile-pic.png"></span>
+                        Author name</li>
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+
+
+
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="../assets/images/aurthor-name.png"></span> Author name</li>
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                  <div class="top-tab">
+                    <select name="cars" id="cars">
+                      <option value="volvo">최신순</option>
+                      <option value="saab">최신순</option>
+                      <option value="opel">최신순</option>
+                      <option value="audi">최신순</option>
+                    </select>
+
+
+
+                  </div>
+
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="../assets/images/aurthor-name.png"></span> Author name</li>
+
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="../assets/images/aurthor-name.png"></span> Author name</li>
+
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="../assets/images/aurthor-name.png"></span> Author name</li>
+
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="../assets/images/aurthor-name.png"></span> Author name</li>
+
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="../assets/images/aurthor-name.png"></span> Author name</li>
+
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+
+                  <div class="mydocuments-outer">
+                    <div class="documents-left">Document title.pdf</div>
+                    <ul>
+                      <li class="authorname"><span class="participnat-pic"><img
+                            src="../assets/images/aurthor-name.png"></span> Author name</li>
+
+                      <li class="date">등록일 : 2021.06.01</li>
+                      <li>
+                        <button class="blue-btn">공유하기</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+
+
+
+              </div>
+              <div class="modal-body">
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+  <!-- /body-container -->
+
+  <%- include('../partials/footerworker'); -%>
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+
+
+
+    <script>
+
+
+      var socket = io.connect('/');
+
+      $(window).on("load", function () {
+        get_participant_details();
+
+        var role = $("#role_id").val();
+        var room_id = $("#room_id").val();
+        var user_id = $("#user_id").val();
+        var sharing_user_type = $("#sharing_user_type").val();
+        socket.emit("chk_reload", room_id, role, sharing_user_type);
+      });
+
+      $(function () {
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var user_id = document.getElementById("user_id").value;
+        var room_id = urlParams.get('room_id');
+
+        var nameu = document.getElementById("name").value;
+        var image = document.getElementById("image").value;
+        //console.log("=====" + user_id);
+        //console.log("=====" + room_id);
+        // document.getElementById("user_id").value = user_id;
+        document.getElementById("room_id").value = room_id;
+
+        var user_role = $("#role_id").val();
+        var sharing_user_type = $("#sharing_user_type").val();
+
+        //if(user_role == 'host')
+        if (sharing_user_type == 'presenter') {
+          $("#controls").show();
+        }
+        else {
+          $("#controls").hide();
+        }
+
+
+        // ------------
+        var data = {
+          room: room_id,
+          user: user_id,
+          user_name: nameu,
+          image: image,
+          share_user_type: sharing_user_type
+        };
+
+        function JoinRoom(data) {
+          socket.emit("join", data);
+        }
+
+
+
+        JoinRoom(data);
+
+        //-------------
+
+
+
+
+
+        $("#btn_cpy").click(function () {
+
+          var copyURL = $("#area_to_copy").html();
+          navigator.clipboard.writeText(copyURL);
+
+        });
+
+      });
+
+    </script>
+
+    <script>
+
+      var scrollPosition;
+      var admin = true;
+      const scrollableElement = document.querySelector("#scrollableElement");
+
+      var role = document.getElementById('role_id').value;
+      var chk_status = 0;
+
+      var current_file = '';
+      var current_page = '';
+      var current_scale = '';
+      var curent_position = '';
+      var url = '';
+      var discconn = false;
+
+      var rrid = '';
+
+
+
+      function NextbuttonClicked() {
+        var role = document.getElementById('role_id').value;
+        rrid = document.getElementById('room_id').value;
+
+        console.log("Rooom is : " + rrid);
+        console.log("Role is : " + role);
+
+
+        sharing_user_type = document.getElementById('sharing_user_type').value;
+        console.log("Next click " + sharing_user_type);
+
+        if ($("#my_chk").prop("checked") == true) {
+          chk_status = 1;
+          role = 'host';
+          sharing_user_type = 'presenter';
+        }
+        else {
+          chk_status = 0;
+          role = 'viewer';
+          sharing_user_type = 'none';
+        }
+
+
+        var page_cnt = document.getElementById('page_count').innerText;
+        //if (role == 'host') {
+        if (sharing_user_type == 'presenter') {
+          socket.emit('nextclicked', page_cnt, role, chk_status, sharing_user_type, rrid);
+        }
+        else {
+          //document.getElementById("controls").style.display = "none"; 
+        }
+
+      }
+
+      function PreviousbuttonClicked() {
+        var role = document.getElementById('role_id').value;
+        var sharing_user_type = document.getElementById('sharing_user_type').value;
+
+        if ($("#my_chk").prop("checked") == true) {
+          chk_status = 1;
+          role = 'host';
+          document.getElementById('role_id').value = role;
+
+          sharing_user_type = 'presenter';
+          document.getElementById('sharing_user_type').value = sharing_user_type;
+
+          //get_participant_details();
+
+        }
+        else {
+          chk_status = 0;
+          role = 'viewer';
+
+          document.getElementById('role_id').value = role;
+
+          sharing_user_type = 'viewer';
+          document.getElementById('sharing_user_type').value = sharing_user_type;
+          //get_participant_details();
+
+        }
+
+        // page_cnt = document.getElementById('page_count').innerText;
+
+        //if (role == 'host') {
+        if (sharing_user_type == 'presenter') {
+          socket.emit('previousclicked', role, sharing_user_type, chk_status, rrid);
+        }
+        else {
+          //document.getElementById("controls").style.display = "none"; 
+        }
+
+      }
+
+
+      function ZoominClicked() {
+        var sharing_user_type = document.getElementById('sharing_user_type').value;
+        if ($("#my_chk").prop("checked") == true) {
+          chk_status = 1;
+          role = 'host';
+          document.getElementById('role_id').value = role;
+
+        }
+        else {
+          chk_status = 0;
+          role = 'viewer';
+          document.getElementById('role_id').value = role;
+        }
+
+
+
+        if (role == 'host') {
+          socket.emit('zoominclicked', role, chk_status, rrid);
+        }
+      }
+
+      function ZoomoutClicked() {
+        if ($("#my_chk").prop("checked") == true) {
+          chk_status = 1;
+          role = 'host';
+          // document.getElementById('role_id').value = role;
+
+        }
+        else {
+          chk_status = 0;
+          role = 'viewer';
+          // document.getElementById('role_id').value = role;
+        }
+
+        if (role == 'host') {
+          socket.emit('zoomoutclicked', role, chk_status, rrid);
+        }
+      }
+
+
+      function Scroll() {
+        //console.log('gfsfdsf');
+        rrid = document.getElementById('room_id').value;
+        if (admin == true) {
+          var tempScrollTop = $(scrollableElement).scrollTop();
+          scrollPosition = tempScrollTop.toString();
+
+          var role = document.getElementById('role_id').value;
+          var sharing_user_type = document.getElementById('sharing_user_type').value;
+
+          socket.emit('scrolled', scrollPosition, role, sharing_user_type, rrid);
+
+        }
+
+      }
+
+
+      function leave() {
+        // console.log('leaving');
+        // rrid = document.getElementById('room_id').value;
+        // socket.emit('leave', rrid, socket.id);
+        setTimeout(() => {
+          document.location.href = '/'
+        }, 1000)
+
+      }
+
+      // mouse selection
+
+      $(document).ready(function () {
+
+        var room_id = document.getElementById('room_id').value;
+
+        $('#my_chk').click(function () {
+
+          if ($(this).prop("checked") == true) {
+            console.log("checkbox checked..doc");
+            document.getElementById("controls").style.display = "none";
+            document.getElementById('current_page').value = current_page;
+
+            var room_id = document.getElementById('room_id').value;
+
+
+            socket.emit('get_room_id', room_id);
+            console.log("curent_position");
+
+            discconn = false;
+            operate_pdf_by_own(url, current_page, current_scale);
+            $("#share_document").show();
+
+            $(scrollableElement).scrollTop(curent_position);
+            setTimeout(() => {
+              admin = true;
+            }, 300);
+
+
+          }
+          else if ($(this).prop("checked") == false) {
+            console.log("checkbox unchecked..uu");
+            document.getElementById("controls").style.display = "block";
+            var room_id = document.getElementById('room_id').value;
+
+            var page_no = document.getElementById('page_count').innerHTML;
+
+            document.getElementById('current_page').value = current_page;
+            document.getElementById('current_scale').value = current_scale;
+            document.getElementById('page_num').innerHTML = current_page;
+
+            discconn = true;
+
+            operate_pdf_by_own(url, current_page, current_scale);
+            // console.log(current_page);
+            $("#share_document").hide();
+
+          }
+        });
+
+        sharing_user_type = document.getElementById('sharing_user_type').value;
+        socket.emit("get_curr_share_type", sharing_user_type);
+
+
+
+      });
+
+      $(document).on('mouseup', function (event) {
+        //socket.emit('mouse_activity',{x:event.pageX,y:event.pageY});
+      });
+
+      // End
+      function get_control_by_own() {
+        if (document.getElementById('my_chk').checked) {
+
+          console.log(current_page);
+
+          var room_id = document.getElementById('room_id').value;
+          document.getElementById('current_page').value = current_page;
+
+          //socket.emit('get_room_id', room_id);
+          // socket.emit('get_room_id', room_id, current_page);
+
+          $("#share_document").show();
+
+        } else {
+          // console.log("checkbox unchecked..");
+          $("#share_document").hide();
+          document.getElementById("controls").style.display = "block";
+          var room_id = document.getElementById('room_id').value;
+          discconn = true;
+          var curr_file = document.getElementById('curr_file').value;
+          var curr_page = document.getElementById('current_page').value;
+          document.getElementById('page_num').innerHTML = curr_page;
+          var curr_scale = current_scale;
+          operate_pdf_by_own(curr_file, curr_page, curr_scale);
+        }
+
+      }
+
+      function get_participant_details() {
+
+        var room_id = document.getElementById('room_id').value;
+        $.ajax({
+          type: 'POST',
+          url: '/get_current_share_type',
+          data: { room_id: room_id, user_id: $("#user_id").val() },
+          success: function (data) {
+
+            $("#sharing_user_type").val(data.sharing_user_type);
+            $("#role_id").val(data.user_type);
+
+            var share_type = $("#sharing_user_type").val();
+            //alert(share_type);
+
+            if (share_type == 'presenter') {
+              document.getElementById('my_chk_div').style.display = "none";
+              document.getElementById("controls").style.display = "block";
+              $("#share_document").hide();
+            }
+            else {
+              document.getElementById('my_chk_div').style.display = "block";
+              document.getElementById("controls").style.display = "none";
+
+              if (document.getElementById('my_chk').checked) {
+                document.getElementById("controls").style.display = "none";
+                $("#share_document").show();
+              }
+              else {
+                document.getElementById("controls").style.display = "block";
+                $("#share_document").hide();
+              }
+            }
+
+          }
+        });
+
+      }
+
+      function share_document() {
+        discconn = false;
+        var room_id = document.getElementById('room_id').value;
+        document.getElementById('current_page').value = current_page;
+
+
+        console.log("Sharing document.....");
+        //socket.emit('get_room_id', room_id);
+
+        var role = document.getElementById('role_id').value;
+        var user_id = document.getElementById("user_id").value;
+        //var user_id = document.getElementById('user_id').value;
+
+        sharing_user_type = document.getElementById('sharing_user_type').value;
+        role_id = document.getElementById('role_id').value;
+
+        console.log("Own share" + sharing_user_type);
+
+
+        socket.emit("get_own_pdf", room_id, user_id, role, sharing_user_type, '');
+
+        alert("Presenter is changing ...");
+        get_participant_details();
+
+      }
+
+
+      function get_user_id(user_id) {
+        document.getElementById('user_id').value = user_id;
+        console.log("User ID = " + user_id);
+      }
+
+      function share_new_pdf(doc_id) {
+        update_attachment(doc_id);
+      }
+
+      function update_attachment(doc_id) {
+        var room_id = document.getElementById('room_id').value;
+        var role = document.getElementById('role_id').value;
+        var user_id = document.getElementById("user_id").value;
+        var sharing_user_type = document.getElementById('sharing_user_type').value;
+
+        $.ajax({
+          type: 'POST',
+          url: '/update_attachment',
+          data: { room_id: room_id, doc_id: doc_id, user_id: user_id },
+          success: function (data) {
+
+            if (data.success == true) {
+              alert('File has been selected');
+              $('#inbox').modal('hide');
+              socket.emit("share_inbox_document", room_id, user_id, doc_id, role, sharing_user_type);
+              get_participant_details();
+              window.location.reload(1);
+            }
+
+          }
+        });
+      }
+
+
+      socket.on('clear_canvas', function (data) {
+
+        canvas = document.getElementById('the-canvas'),
+          ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        console.log("Cleared canvas");
+
+      });
+
+      socket.on("update_share_type", function (data) {
+        get_participant_details();
+      });
+
+      socket.on("server_side_chk_reload", function (data) {
+        get_participant_details();
+      });
+
+      socket.on('usersDataUpdate', function (data) {
+
+
+        $("#participant_box").empty()
+        console.log(data);
+
+
+
+
+
+
+        data.users_data.forEach(function (user, counter) {
+
+          if (user) {
+            $('#participant_box').append(`<div class="participant-row">
+                <div class="user-box active active-red">
+                  <div class="profile-pic">
+                    <img src="../uploads/${user.image}" />
+                  </div>
+                  <div class="user-name">${user.name}
+                    <span>(나)</span>
+                  </div>
+                </div>
+                <div class="action-box">
+                  <div class="dropdown">
+                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img src="../assets/icons/icon-kebab-menu.svg">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                      <a class="dropdown-item" href="javascript:void(0)">호스트로 지정 </a>
+                    </div>
+                  </div>
+                </div>
+              </div>`);
+          }
+
+        });
+      })
+
+      //when we receive numClients, do this 
+      socket.on('sendfile', function (data) {
+        // document.getElementById("buttonCount").innerHTML = data;
+
+
+        url = data.filePath;
+        console.log(url);
+        current_file = data.filePath;
+        current_page = data.clickCount;
+
+        // Loaded via <script> tag, create shortcut to access PDF.js exports.
+        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+        // The workerSrc property shall be specified.
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+        var pdfDoc = url,
+          pageNum = data.clickCount,
+          pageRendering = false,
+          pageNumPending = null,
+          scale = data.scale,
+          share_type = data.sharing_user_type,
+          canvas = document.getElementById('the-canvas'),
+          ctx = canvas.getContext('2d');
+
+        // role = data.role;
+
+        console.log("Sharing User type : " + share_type);
+
+        //|| role == 'host'
+        if (share_type == 'presenter') {
+          document.getElementById('my_chk_div').style.display = "none";
+          document.getElementById("controls").style.display = "block";
+        }
+        else {
+          document.getElementById('my_chk_div').style.display = "block";
+          document.getElementById("controls").style.display = "none";
+          if (document.getElementById('my_chk').checked) {
+            document.getElementById("controls").style.display = "none";
+          }
+          else {
+            document.getElementById("controls").style.display = "block";
+          }
+        }
+
+
+        function renderPage(num) {
+
+          pageRendering = true;
+
+          // Using promise to fetch the page
+          pdfDoc.getPage(num).then(async function (page) {
+            var viewport = page.getViewport({ scale: scale });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = {
+              canvasContext: ctx,
+              viewport: viewport
+            };
+            var renderTask = await page.render(renderContext);
+
+            // Wait for rendering to finish
+            renderTask.promise.then(async function () {
+              pageRendering = false;
+              if (pageNumPending !== null) {
+                // New page rendering is pending
+                await renderPage(pageNumPending);
+                pageNumPending = null;
+              }
+            });
+          });
+
+          // Update page counters
+          document.getElementById('page_num').textContent = num;
+        }
+
+        /**
+         * If another page rendering in progress, waits until the rendering is
+         * finised. Otherwise, executes rendering immediately.
+         */
+        function queueRenderPage(num) {
+          if (pageRendering) {
+            pageNumPending = num;
+          } else {
+            renderPage(num);
+          }
+        }
+
+
+        pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+          pdfDoc = pdfDoc_;
+          document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+          // Initial/first page rendering
+          renderPage(pageNum);
+        });
+
+
+
+
+      });
+
+
+      socket.on('buttonUpdate', function (data) {
+
+        // console.log(data.roomID);
+
+
+
+        url = data.filePath;
+        console.log(data.filePath)
+        var pageNum = data.clickCount;
+        var pageNumPending = null;
+        var scale = data.scale;
+        var canvas = document.getElementById('the-canvas');
+        var ctx = canvas.getContext('2d');
+        var shownPdf;
+
+        current_scale = data.scale;
+        current_page = data.clickCount;
+        document.getElementById('current_page').value = data.clickCount;
+
+        document.getElementById('current_scale').value = data.scale;
+        function renderPage(pageNum) {
+
+          pageRendering = true;
+          // Using promise to fetch the page
+          pdfDoc.getPage(pageNum).then(function (page) {
+
+            pageRendering = true;
+            var viewport = page.getViewport({ scale: scale });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = {
+              canvasContext: ctx,
+              viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+
+            // Wait for rendering to finish
+            renderTask.promise.then(function () {
+              pageRendering = false;
+              if (pageNumPending !== null) {
+                // New page rendering is pending
+                renderPage(pageNumPending);
+                pageNumPending = null;
+              }
+            });
+          });
+
+          // Update page counters
+          document.getElementById('page_num').textContent = pageNum;//num;
+        }
+
+        //console.log(pageRendering);
+
+        /**
+         * If another page rendering in progress, waits until the rendering is
+         * finised. Otherwise, executes rendering immediately.
+         */
+        function queueRenderPage(num) {
+          if (pageRendering) {
+            pageNumPending = num;
+          } else {
+            renderPage(num);
+          }
+        }
+
+        if (discconn == false) {
+          /**
+           * Displays previous page.
+           */
+          function onPrevPage() {
+            if (pageNum <= 1) {
+              return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+
+            if (pageNum == 1) {
+              document.getElementById('prev').visibility = "hidden";
+            }
+          }
+          // document.getElementById('prev').addEventListener('click', onPrevPage);
+
+          /**
+           * Displays next page.
+           */
+          function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+              return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+
+            if (pageNum == pdfDoc.numPages) {
+              document.getElementById('next').visibility = "hidden";
+            }
+          }
+          // document.getElementById('next').addEventListener('click', onNextPage);
+
+          // var zoominbutton = document.getElementById("zoominbutton");
+          // zoominbutton.onclick = 
+          function zoominbutton() {
+            scale = scale + 0.25;
+            // displayPage(shownPdf, pageNum);
+            queueRenderPage(pageNum);
+
+          }
+          // document.getElementById('zoominbutton').addEventListener('click', zoominbutton);
+
+          // var zoomoutbutton = document.getElementById("zoomoutbutton");
+          // zoomoutbutton.onclick = 
+          function zoomoutbutton() {
+            if (scale <= 0.25) {
+              return;
+            }
+            scale = scale - 0.25;
+            // displayPage(shownPdf, pageNum);
+            queueRenderPage(pageNum);
+          }
+          // document.getElementById('zoomoutbutton').addEventListener('click', zoomoutbutton);
+
+          current_scale = document.getElementById('current_scale').value = scale;
+
+
+
+          pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            document.getElementById('page_count').textContent = pdfDoc.numPages;
+            renderPage(pageNum);
+          });
+        }
+      });
+
+
+      socket.on('scrolling', function (data) {
+
+        var ids = socket.id;
+
+        console.log("cdfgdfg")
+        curent_position = document.getElementById('current_scroll_pos').value = data.scrollPosition;
+
+        if (discconn == false) {
+          if (data.ids != ids) {
+
+            console.log("DO scroll")
+            admin = false;
+            $(scrollableElement).scrollTop(data.scrollPosition);
+            setTimeout(() => {
+              admin = true;
+            }, 300);
+
+
+          } else {
+            console.log("Do nothing !")
+            admin = true;
+
+            // document.getElementById('current_scroll_pos').value = data.data;
+
+            return;
+          }
+        }
+
+
+        // $(scrollableElement).scrollTop(data);
+        // }, 1000)
+
+        // scrollableElement.scrollTop=data;
+
+      });
+
+
+
+      function operate_pdf_by_own(filePath, current_page, current_scale) {
+        // var url = filePath;
+        // Loaded via <script> tag, create shortcut to access PDF.js exports.
+        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+        // The workerSrc property shall be specified.
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+        var pdfDoc = url,
+          pageNum = current_page,
+          pageRendering = false,
+          pageNumPending = null,
+          scale = current_scale,//current_scale,
+          canvas = document.getElementById('the-canvas'),
+          ctx = canvas.getContext('2d');
+
+        /**
+         * Get page info from document, resize canvas accordingly, and render page.
+         * @param num Page number.
+         */
+        function renderPage(num) {
+          pageRendering = true;
+          // Using promise to fetch the page
+          pdfDoc.getPage(num).then(function (page) {
+            var viewport = page.getViewport({ scale: scale });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = {
+              canvasContext: ctx,
+              viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+
+            // Wait for rendering to finish
+            renderTask.promise.then(function () {
+              pageRendering = false;
+              if (pageNumPending !== null) {
+                // New page rendering is pending
+                renderPage(pageNumPending);
+                pageNumPending = null;
+              }
+            });
+          });
+
+          // Update page counters
+          document.getElementById('page_num').textContent = num;
+        }
+
+        /**
+         * If another page rendering in progress, waits until the rendering is
+         * finised. Otherwise, executes rendering immediately.
+         */
+        function queueRenderPage(num) {
+          if (pageRendering) {
+            pageNumPending = num;
+          } else {
+            renderPage(num);
+          }
+        }
+
+        /**
+         * Displays previous page.
+         */
+
+        // if (discconn == true) {
+
+        function onPrevPage() {
+          if (pageNum <= 1) {
+            return;
+          }
+          pageNum--;
+          queueRenderPage(pageNum);
+        }
+        document.getElementById('prev').addEventListener('click', onPrevPage);
+
+        /**
+         * Displays next page.
+         */
+        function onNextPage() {
+          if (pageNum >= pdfDoc.numPages) {
+            return;
+          }
+          pageNum++;
+          queueRenderPage(pageNum);
+        }
+        document.getElementById('next').addEventListener('click', onNextPage);
+
+
+
+        function zoominbutton() {
+          scale = scale + 0.25;
+          // displayPage(shownPdf, pageNum);
+          queueRenderPage(pageNum);
+        }
+        document.getElementById('zoominbutton').addEventListener('click', zoominbutton);
+
+        // var zoomoutbutton = document.getElementById("zoomoutbutton");
+        // zoomoutbutton.onclick = 
+        function zoomoutbutton() {
+          if (scale <= 0.25) {
+            return;
+          }
+          scale = scale - 0.25;
+          // displayPage(shownPdf, pageNum);
+          queueRenderPage(pageNum);
+        }
+        document.getElementById('zoomoutbutton').addEventListener('click', zoomoutbutton);
+
+
+
+
+        /**
+         * Asynchronously downloads PDF.
+         */
+        pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+          pdfDoc = pdfDoc_;
+          document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+          // Initial/first page rendering
+          renderPage(pageNum);
+        });
+
+        // $(document).trigger('scroll');
+
+      }
+
+
+    </script>

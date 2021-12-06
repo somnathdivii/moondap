@@ -1,0 +1,444 @@
+<%- include('../partials/headerworker'); -%>
+
+
+<section class="container-medium">
+    <div class="documents-wrapper">
+        <ul class="breadcrumb">
+            <li><a href="javascript:void(0)">홈</a></li>
+            <li class="active"><a href="javascript:void(0)">공유방</a></li>
+        </ul>
+
+        <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">나의 발표 문서</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">공유받은 문서</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">공유받은 텍스트, 링크 </a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="top-tab">
+                    <select name="cars" id="cars" class="icon-right-arrows">
+                        <option value="volvo">최신순</option>
+                        <option value="saab">최신순</option>
+                        <option value="opel">최신순</option>
+                        <option value="audi">최신순</option>
+                    </select>
+                    <form action="" method="post" id="upload_doc" enctype="multipart/form-data">
+                        <div class="upload upload-btn">
+                            <div class="content-innter">
+                                <p><i class="icon-upload-white"></i>문서 업로드</p>
+                            </div>
+                            <input type="file" name="myfile" class="file-upload" id="upload_document" />
+                        </div>
+                        <!-- <div class="upload upload-btn">
+							<div class="content-innter">
+								<p>
+									<i class="icon-upload-white"></i>문서 업로드
+								</p>
+							</div>
+							<input type="file" name="profile_image" id="upload_document" class="file-upload">
+						</div> -->
+                    </form>
+                </div>
+                <div id="alldocs">
+                    <% for (var i = 0; i < docs.length ; i++) { %></rooms.length>
+                    <div class="mydocuments-outer">
+                        <div class="documents-left"><%= docs[i]['file_name'] %></div>
+                        <ul>
+                            <li class="date"><%= new Date(docs[i]['createdAt']).getFullYear() %>-<%= ("0" + (new Date(docs[i]['createdAt']).getMonth() + 1)).slice(-2) %>-<%= ("0" + new Date(docs[i]['createdAt']).getDate()).slice(-2) %></li>
+                            <li>
+                                <div class="action-box">
+                                    <div class="dropdown">
+                                        <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="../assets/icons/icon-kebab-menu.svg" />
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                            <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">문서 설정</a>
+                                            <a class="dropdown-item delete_doc" href="javascript:void(0)" data-id="<%= docs[i]['id'] %>">삭제</a>
+                                            <a class="dropdown-item" href="/uploads/hwpuploads/pdf/<%= docs[i]['file_name'] %>" download>내 기기에 저장</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="top-tab">
+                    <select name="cars" id="cars">
+                        <option value="volvo">최신순</option>
+                        <option value="saab">최신순</option>
+                        <option value="opel">최신순</option>
+                        <option value="audi">최신순</option>
+                    </select>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research 1</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">내 기기에 저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research 1</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">내 기기에 저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research 1</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">내 기기에 저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research 1</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">내 기기에 저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research 1</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">내 기기에 저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research 1</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">내 기기에 저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">UX Research 1</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">내 기기에 저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <div class="top-tab">
+                    <select name="cars" id="cars">
+                        <option value="volvo">최신순</option>
+                        <option value="saab">최신순</option>
+                        <option value="opel">최신순</option>
+                        <option value="audi">최신순</option>
+                    </select>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">첫번째 과제입니다. Http://www.google.com/ 두번째 과제...</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">첫번째 과제입니다. Http://www.google.com/ 두번째 과제...</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">첫번째 과제입니다. Http://www.google.com/ 두번째 과제...</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">첫번째 과제입니다. Http://www.google.com/ 두번째 과제...</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">첫번째 과제입니다. Http://www.google.com/ 두번째 과제...</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mydocuments-outer">
+                    <div class="documents-left">첫번째 과제입니다. Http://www.google.com/ 두번째 과제...</div>
+                    <ul>
+                        <li class="authorname">
+                            <span class="participnat-pic"><img src="../assets/images/aurthor-name.png" /></span> Author name
+                        </li>
+
+                        <li class="date">등록일 : 2021.06.01</li>
+                        <li>
+                            <div class="action-box">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="participantR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../assets/icons/icon-kebab-menu.svg" />
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="participantR">
+                                        <a class="dropdown-item" href="javascript:void(0)">바로 공유하기</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">삭제</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/left-arrow.png" /></a>
+                    </li>
+                    <li><a class="active" href="javascript:void(0)">1</a></li>
+                    <li><a href="javascript:void(0)">2</a></li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/right-arrow.png" /></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<button class="primary-blue-button btn" data-toggle="modal" data-target="#my-documents-delet" id="doc_delete_mod" style="display: none;"></button>
+<div id="my-documents-delet" class="modal fade" role="dialog">
+    <div class="modal-dialog small-modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="log-head">
+            <h1 class="login-heading">문서 설정</h1>
+            <h4 class="new">문서를 정말로 삭제하시겠습니까?</h4>
+          </div>
+          <p>해당 문서는 내 문서함에서만 삭제됩니다.</p>
+        </div>
+        <div class="modal-footer d-flex align-item-center">
+          <div class="btn-wrap">
+            <button class="modal-button blue-btn full-width" id="doc_delete_butn">확인</button>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+<%- include('../partials/footerworker'); -%>

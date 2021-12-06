@@ -1,0 +1,177 @@
+.documents-wrapper{
+  margin: 20px 0px;
+  width:100%;
+  nav{
+    .nav-item{
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 29px;
+      text-align: center;
+      letter-spacing: -0.05em;
+      flex: none;
+      margin: 0px 15px;
+      color: $grey-CF;
+      &:hover{
+        border-color: transparent;
+      }
+      &.active {
+        border-color: transparent;
+        border-bottom: 3px solid $blue-01;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: -0.05em; 
+        color:$blue-01 ;
+        @media screen and (max-width: 768px){
+          margin-left:0px;
+          font-size:13px;
+        }
+      }
+      @media screen and (max-width: 768px){
+        font-size: 12px;
+        margin: 0px 3px;
+      }   
+    }
+  }
+
+  .tab-content{
+    padding-top:25px;
+    padding-left: 40px;
+    padding-right:40px;
+    @media screen and (max-width: 768px){
+      padding-left:16px;
+      padding-right:16px;
+    }
+  }
+
+  .top-tab{
+    @include display-start-between;
+    padding-bottom: 25px;
+    border-bottom: 1px solid $grey-eo;
+    
+    select {
+      padding:0px 15px 0px 0px;
+      margin-top:13px;
+    }
+  }
+
+  .upload-btn{
+    position: relative;
+    .content-innter{
+      border: 1px solid $orange-01;
+      border-radius: 8px;
+      @include display-justify-center;
+      padding: 15px;
+      background:$orange-01 ;
+      p{
+        color: $white-FF;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.05em;
+        i{
+          margin-left: 7px;
+        }
+      }
+    }
+    .file-upload {
+      position: absolute;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 46px;
+      cursor: pointer;
+      text-indent: -999px;
+    }
+  }
+  .mydocuments-outer{
+    @include display-space-between;
+    padding: 20px 0px;
+    border-bottom: 1px solid $grey-eo;
+    @media screen and (max-width: 768px){
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .documents-left{font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      letter-spacing: -0.05em;
+      color: $black-33;
+      @media screen and (max-width: 768px){
+          width: 100%;
+          font-size: 14px;
+      }
+    }
+
+    ul{
+      display: flex;
+      @media screen and (max-width: 768px){
+          width: 100%;
+          justify-content: space-between;
+          margin-top: 8px;
+      }
+      li{
+        margin-left: 40px;
+        @include display-align-center;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 16px;
+        color: $black-33;
+        &:first-child{
+          margin-left: 0;
+        }
+        &.date{
+          color: $grey-A4;
+        }
+      } 
+    } 
+  }
+
+  .pagination{
+    @include display-justify-center;
+    padding: 20px;
+    ul{
+      display: flex;
+      li{
+        padding: 0px 10px; display: flex;align-items: center;
+        a{
+          font-style: normal;
+          font-weight: normal;
+          font-size: 15px;
+          line-height: 150%;
+          color: $black-4c;
+          &:hover, 
+          &.active{
+            color:$blue-01; 
+            border-bottom: 1px solid $blue-01;
+          }
+        }
+      }
+    }
+  }
+  .nav-tabs{
+    padding-left: 32px;
+    border-bottom: 1px solid $blue-01;
+    @media screen and (max-width: 768px){
+        padding-left:0px;
+    }
+  }
+  .authorname{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.05em;
+    color: $black-33;
+    .participnat-pic{
+      padding-right:10px;
+      img{
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+    }
+  }
+}

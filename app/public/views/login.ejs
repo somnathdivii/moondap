@@ -1,0 +1,72 @@
+<%- include('./partials/header'); -%>
+	<!-- body-container -->
+	<section class="container-small loginSectionWrap min-body">
+		<div class="loginWrap">
+			<div class="log-head">
+				<h1 class="login-heading">로그인</h1>
+			</div>
+			<form id="form" class="pt-3" method="post">
+			<div class="form-group">
+				<label>핸드폰 번호</label>
+				<div class="input-group">
+					<!-- add "error" class to "form-control" to change border color -->
+					<input class="form-control" name="email" type="email" value="subhajit@divii.com" placeholder="핸드폰 번호를 입력해주세요">
+				</div>
+				<!-- <span class="red-text">핸드폰 번호가 일치하지 않습니다.</span> -->
+			</div>
+			<div class="form-group">
+				<label>비밀번호</label>
+				<div class="input-group">
+					<input class="form-control" name="password" type="password" value="123456" placeholder="비밀번호를 입력해주세요">
+				</div>
+				<!-- <span class="red-text">비밀번호가 일치하지 않습니다.</span> -->
+			</div>
+
+			<div class="login-check-list">
+				<div class="check-box-wrap">
+					<label class="custom-check">
+						아이디 저장
+						<input type="checkbox" checked="checked">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<ul class="formLink  d-flex justify-content-center">
+					<li>
+						<a href="/registration">회원가입</a>
+					</li>
+					<li>
+						<a href="/find-password">비밀번호 찾기</a>
+					</li>
+				</ul>
+			</div>
+
+
+			<div class="main-btn-group">
+				<button class="primary-blue-button" type="submit" >로그인</button>
+				<a href="/enter-without-login" class="primary-blue-button blue-outline mt-10" >로그인없이 입장(1회)</a>
+			</div>
+			<div class="mb-2">
+					<span id="check"></span>
+				</div>	
+		</form>
+		<div class="mb-2">
+			<span id="check"></span>
+		</div>
+		<a href="/" id="loginaa"></a>
+			<div class="sep-middle-section">
+				<span>SNS 계정 로그인</span>
+			</div>
+
+			<div class="main-btn-group no-margin">
+				<button class="primary-blue-button black-outline social-btn" type="button">
+					<i class="icon-social-talk"></i>카카오톡 로그인
+				</button>
+				<button class="primary-blue-button black-outline social-btn" type="button">
+					<i class="icon-social-google"></i>구글 로그인
+				</button>
+			</div>
+
+		</div>
+	</section>
+	<!-- /body-container -->
+	<%- include('./partials/footer'); -%>

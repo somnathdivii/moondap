@@ -1,0 +1,11 @@
+ALTER TABLE `my_docs` CHANGE `deletedAt` `deletedAt` DATETIME NOT NULL;
+
+ALTER TABLE `my_docs` CHANGE `deletedAt` `deletedAt` DATETIME NULL;
+
+ALTER TABLE `attachments` ADD `doc_id` INT NULL DEFAULT '0' AFTER `user_id`;
+
+<--------Soumita------->
+RENAME TABLE `moondap`.`my_doc` TO `moondap`.`mydocs`;
+ALTER TABLE `mydocs` CHANGE `updatedAt` `updatedAt` DATETIME NULL DEFAULT NULL;
+ALTER TABLE `mydocs` CHANGE `deletedAt` `updatedAt` DATETIME NULL DEFAULT NULL;
+<--------Soumita------->

@@ -1,0 +1,99 @@
+/* .past{
+.past-participation{
+   .right-menu-screen{
+     width:100% !important;
+     max-width: initial !important;
+   .view-all-docs{border-bottom:1px solid #F2F2F2;padding-bottom: 20px;margin-top:15px;}
+   }
+      .view-area{
+        overflow: visible !important;
+      }
+
+   .right-small-box{
+      border: none !important;
+      padding-top: 0px !important;
+      } 
+   .sorting-wrap{margin-top:0px !important;}
+   .view-all-docs{ margin-top: 15px !important;}
+}
+.document-footer{
+  padding: 0px 0px 16px !important;
+  height: 0px !important;
+}
+} */
+
+.past-participation{
+
+  .participant-box {
+    margin-top: 30px;
+    overflow: auto;
+    max-height: 90%;
+    @media screen and (max-width: 992px) {
+      margin-top: 20px;
+    }
+    @media screen and (max-width: 768px) {
+      max-height: 80%;
+    }
+  
+    .view-all-docs {
+      display: flex;
+      margin-top: 15px;
+      border-bottom: 1px solid $white-f2;
+      padding-bottom: 16px;
+      &:first-child {
+        margin-top: 0;
+      }
+      .doc-icon {
+        width: 16px;
+        margin-right: 8px;
+        i.icon-doc-grey {
+          background-size: auto 16px;
+          width: 12px;
+          height: 16px;
+        }
+      }
+      .doc-content {
+        width: calc(100% - 30px);
+        > a {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 17px;
+          color: $black-33;
+          @include text-ellipsis;
+          max-width: 100%;
+          text-decoration: underline;
+        }
+        .doc-user-details {
+          @include display-space-between;
+          margin-top: 12px;
+          .user-box {
+            @include display-align-center;
+            .profile-pic {
+              img {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+              }
+            }
+            .user-name {
+              font-weight: 500;
+              font-size: 12px;
+              line-height: 14px;
+              color: $black-33;
+              margin-left: 11px;
+              max-width: 90px;
+              @include text-ellipsis;
+            }
+          }
+          .date {
+            font-weight: 500;
+            font-size: 11px;
+            line-height: 13px;
+            color: $black-82;
+          }
+        }
+      }
+    }
+  
+  }
+}

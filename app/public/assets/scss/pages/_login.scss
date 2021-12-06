@@ -1,0 +1,159 @@
+.loginSectionWrap{
+  @media screen and (max-width: 768px){
+    width: 100% !important;
+  }
+  .loginWrap{
+    margin: 70px 0 100px;
+    background: $white-FF;
+    box-shadow: 0px 3px 10px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding: 70px 57px;
+    @media screen and (max-width: 768px){
+      padding: 0 16px;
+      box-shadow: none;
+      margin: 30px 0 50px;
+    }
+    .log-head{
+      margin-bottom: 40px;
+      &.joining-shared{
+        margin-bottom: 25px;
+        .sub-heading{
+          padding-top: 31px;
+          color: $black-33;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 22px;
+          span{
+            color: $blue-01;
+          }
+        }
+      }
+    }
+    .login-heading{
+      font-weight: bold;
+      font-size: 30px;
+      line-height: 36px;
+      color: $black-00;
+    }
+    .sub-heading{
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 21px;
+      color: $grey-7c82;
+      margin-top: 10px;
+    }
+    
+    .login-check-list{
+      margin: 16px 0 45px;
+      @include display-space-between;
+    }
+    .formLink{
+      margin-top: 0px;
+      li{
+          font-size: 14px;
+          line-height: 21px;
+          &:last-child{
+              &:after{
+                display: none;
+              }
+          }
+          a{
+            color: $black-66;
+            // padding-top: 10px;
+            display: inline-flex;
+          }
+          &:after{
+            content: '|';
+            padding: 0 10px;
+            color: $grey-CF;
+          }
+      }
+    }
+    .shared-room-allow{
+      .doc-allow-wrap{
+        .doc-allow-text{
+          justify-content: space-between;
+          margin-top: 14px;
+          .txtdoc{
+            max-width: 70%;
+            p{
+              font-weight: 500;
+              font-size: 18px;
+              line-height: 22px;
+              color: $black-33;
+              @media screen and (max-width: 768px){
+                font-size: 12px;
+                line-height: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .checkfor-withdrawal{
+      margin-top: 5px;
+      @include display-justify-center;
+    }
+  }
+  .social-btn{
+    position: relative;
+    i{
+      position:absolute;
+      left: 22px;
+    }
+  }
+
+  .upload-btn{
+    width: 100%;
+    position: relative;
+    .content-innter{
+      border: 1px solid $orange-01;
+      border-radius: 8px;
+      @include display-justify-center;
+      padding: 15px;
+      p{
+        color: $orange-01;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.05em;
+        i{
+          margin-left: 7px;
+        }
+      }
+    }
+    .file-upload {
+      position: absolute;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 46px;
+      cursor: pointer;
+      text-indent: -999px;
+    }
+  }
+
+  em{color: $blue-01;}
+}
+.sep-middle-section{
+  @include display-justify-center;
+  position: relative;
+  margin: 25px 0px 20px;
+  >span{
+    background: #fff; 
+    padding: 0px 20px; 
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 1;
+  }
+
+  &:after{
+    content: '';
+    padding: 0 10px;
+    color: $grey-CF;
+    border: 2px solid $grey-A4;
+    width:100%;
+    position: absolute;
+  }
+}

@@ -1,0 +1,1 @@
+ALTER TABLE `participants` CHANGE `sharing_user_type` `sharing_user_type` ENUM('none','presenter') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;

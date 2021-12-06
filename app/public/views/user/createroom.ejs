@@ -1,0 +1,89 @@
+<%- include('../partials/headerworker'); -%>
+
+
+	<!-- body-container -->
+	<section class="container-small loginSectionWrap min-body">
+		<div class="loginWrap">
+			<div class="log-head">
+				<h1 class="login-heading">공유방 만들기</h1>
+			</div>
+			<!-- <form method="POST" id="createRoom"> -->
+			<form action="/create_room" method="post" id="createRoom">
+				<div class="form-group">
+					<label>공유방 제목</label>
+					<div class="input-group">
+						<!-- add "error" class to "form-control" to change border color -->
+						<input class="form-control" name="room_name" id="room_name" type="text" placeholder="공유방 제목을 입력해주세요">
+					</div>
+					<!-- <span class="red-text">올바른 핸드폰 번호를 입력해주세요.</span> -->
+				</div>
+				<div class="shared-room-allow doc-allow">
+					<div class="doc-allow-wrap">
+						<div class="doc-allow-text">
+							<div class="txtdoc">
+								<p>상대방 문서함에 문서 자동 저장 및 외부 공유 허용</p>
+							</div>
+							<div class="custom-toggle bigSwitch">
+								<label class="switch">
+									<input type="checkbox" checked name="autosaveall" id="autosaveall" value="1">
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+						<div class="doc-allow-text">
+							<div class="txtdoc">
+								<p>문서공유 권한 모두 있음</p>
+							</div>
+							<div class="custom-toggle bigSwitch">
+								<label class="switch">
+									<input type="checkbox" name="allowsharing" id="allowsharing" value="0">
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="main-btn-group">
+					<!-- <button class="primary-blue-button" type="button">만들기</button> -->
+					<input type="submit" id="submit" class="primary-blue-button" value="만들기"/>
+				</div>
+			</form>
+		</div>
+	</section>
+	<!-- body-container -->
+
+
+
+
+
+	<%- include('../partials/footerworker'); -%>
+
+	<script>
+		$(function(){
+			
+             $("#autosaveall").change(function(){
+                  if($(this).prop("checked"))
+				  {
+					  $(this).val(1);
+				  }
+				  else
+				  {
+					$(this).val(0);
+				  }
+			 });
+
+			 $("#allowsharing").change(function(){
+                  if($(this).prop("checked"))
+				  {
+					  $(this).val(1);
+				  }
+				  else
+				  {
+					$(this).val(0);
+				  }
+			 });
+
+
+		});
+	</script>

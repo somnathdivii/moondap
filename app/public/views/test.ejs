@@ -1,0 +1,27 @@
+<%- include('./partials/header'); -%>
+	<!-- body-container -->
+	<section class="container-small loginSectionWrap min-body">
+		<div class="loginWrap">
+			<div class="log-head">
+				<h1 class="login-heading">Conversion</h1>
+			</div>
+			<form action="/convert" class="pt-3" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label>핸드폰 번호</label>
+					<div class="input-group">
+						<!-- add "error" class to "form-control" to change border color -->
+						<input class="form-control" name="hwpfile" type="file">
+					</div>
+					<!-- <span class="red-text">핸드폰 번호가 일치하지 않습니다.</span> -->
+				</div>
+				<div class="main-btn-group">
+					<button class="primary-blue-button" type="submit">로그인</button>
+				</div>
+				<div class="mb-2">
+					<span id="check"></span>
+				</div>
+			</form>
+
+	</section>
+	<!-- /body-container -->
+	<%- include('./partials/footer'); -%>

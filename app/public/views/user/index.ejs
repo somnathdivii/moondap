@@ -1,0 +1,181 @@
+<%- include('../partials/headerworker'); -%>
+
+
+	<!-- body-container -->
+	<section class="container-medium ">
+		<div class="home-wrap">
+			<div class="banner-wrapper">
+				<div class="banner-inner">
+					<div class="banner-images">
+						<img src="../assets/images/banner-images.png" />
+					</div>
+					<div class="banner-text">
+						<h3>언택트 회의 프로그램의 정점 MOONDAP
+						</h3>
+						<p>통제가 용이한 화면 공유 및 높은 의사와 정보 전달력을 지닌 문답 서비스를 지금 바로 이용해보세요!</p>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="top-area">
+				<h3>지난 참여</h3>
+				<button class="primary-blue-button blue-outline" type="button">로그인</button>
+				<a href="/create" class="primary-blue-button" type="button">로그인</a>
+			</div> -->
+			<div class="top-area">
+				<h3>지난 참여</h3>
+				<div class="btn-group">
+				  <!-- <button class="primary-blue-button blue-outline" type="button">로그인</button> -->
+				  <!-- <a href="" class="primary-blue-button blue-outline btnl">공유방 참가</a> -->
+				  <button class="primary-blue-button blue-outline" data-toggle="modal" data-target="#room_join_modal">공유방 참가</button>
+				  <a href="/create" class="primary-blue-button btnl">공유방 만들기</a>
+		  
+			  	</div>
+			</div>
+
+
+			<div class="marketing-outer">
+				<% for (var i = 0; i < rooms.length ; i++) { %>
+					<div class="marketing-outer-inner">
+						<div class="marketing">
+							<p><%= roomname[i] %></p>
+						</div>
+						<ul>
+							<li>
+								<span class="participnat-pic">
+									<img src="../uploads/<%= userimage[i] %>" />
+								</span> <%= username[i] %> <% if((user_cnt[i] - 1) > 0){ %> & <%= (user_cnt[i] - 1) %> others <% } %></li>
+							<% if(attachments[i] > 0){ %>
+								<li class="updocs" data-id="<%= rooms[i] %>">
+							<% }else{ %>
+								<li >
+							<% } %>
+								<i class="icon-doc"></i><%= attachments[i] %></li>
+							<li class="date"><%= new Date(createDates[i]).getFullYear() %>-<%= ("0" + (new Date(createDates[i]).getMonth() + 1)).slice(-2) %>-<%= ("0" + new Date(createDates[i]).getDate()).slice(-2) %></li>
+						</ul>
+					</div>
+				<% } %>
+				
+
+				<!-- <div class="marketing-outer-inner">
+					<div class="marketing">
+						<p>Marketing Coordinator</p>
+					</div>
+					<ul>
+						<li>
+							<span class="participnat-pic">
+								<img src="../assets/images/participant-pic.png" />
+							</span> Ronald 외 10명</li>
+						<li>
+							<i class="icon-doc"></i>10</li>
+						<li class="date">2021.06.01</li>
+					</ul>
+				</div>
+
+
+				<div class="marketing-outer-inner">
+					<div class="marketing">
+						<p>Marketing Coordinator</p>
+					</div>
+					<ul>
+						<li>
+							<span class="participnat-pic">
+								<img src="../assets/images/participant-pic.png" />
+							</span> Ronald 외 10명</li>
+						<li>
+							<i class="icon-doc"></i>10</li>
+						<li class="date">2021.06.01</li>
+					</ul>
+				</div>
+
+
+				<div class="marketing-outer-inner">
+					<div class="marketing">
+						<p>Marketing Coordinator</p>
+					</div>
+					<ul>
+						<li>
+							<span class="participnat-pic">
+								<img src="../assets/images/participant-pic.png" />
+							</span> Ronald 외 10명</li>
+						<li>
+							<i class="icon-doc"></i>10</li>
+						<li class="date">2021.06.01</li>
+					</ul>
+				</div>
+
+
+				<div class="marketing-outer-inner">
+					<div class="marketing">
+						<p>Marketing Coordinator</p>
+					</div>
+					<ul>
+						<li>
+							<span class="participnat-pic">
+								<img src="../assets/images/participant-pic.png" />
+							</span> Ronald 외 10명</li>
+						<li>
+							<i class="icon-doc"></i>10</li>
+						<li class="date">2021.06.01</li>
+					</ul>
+				</div> -->
+
+			</div>
+
+		</div>
+		<!--modal body-->
+		<div id="room_join_modal" class="modal fade" role="dialog">
+			<div class="modal-dialog small-modal">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <div class="log-head">
+					<h1 class="login-heading">방 ID/링크</h1>
+				  </div>
+				  <div class="form-group">
+					<label>공유방 제목</label>
+					<div class="input-group">
+						<!-- add "error" class to "form-control" to change border color -->
+						<input class="form-control" name="room_name" id="" type="text" placeholder="방 ID/링크 입력">
+					</div>
+					<!-- <span class="red-text">올바른 핸드폰 번호를 입력해주세요.</span> -->
+				  </div>
+				</div>
+				<div class="modal-footer d-flex align-item-center">
+					<div class="btn-wrap">
+						<button class="modal-button blue-btn" data-dismiss="modal">확인</button>
+						<button class="modal-button white-btn" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+
+	</section>
+	<button class="primary-blue-button btn" data-toggle="modal" data-target="#viewer_modal" style="display: none !important;" id="modal_open"></button>
+	<div id="viewer_modal" class="modal fade" role="dialog">
+		<div class="modal-dialog medium-modal">
+		  <div class="modal-content">
+			
+			  <div class="documents-wrapper">
+				<div class="tab-content" id="nav-tabContent">
+				  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+	
+					<div class="top-tab">
+					  <div class="upload upload-btn">
+						<button class="content-innter" id="download_all">
+						  <p>모두 다운로드</p>
+						</button>
+					  </div>
+					</div>
+					<div id="alldocs"></div>
+				  </div>
+				</div>
+			  </div>
+			
+		  </div>
+		</div>
+	  </div>
+
+
+
+	<%- include('../partials/footerworker'); -%>

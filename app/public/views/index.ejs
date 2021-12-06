@@ -1,0 +1,81 @@
+<%- include('./partials/header'); -%>
+
+	<!-- body-container -->
+	<section class="container-small loginSectionWrap min-body">
+		<div class="loginWrap">
+			<div class="log-head">
+				<h1 class="login-heading">회원가입</h1>
+				<p class="sub-heading">회원가입을 진행하기 위해 아래 사항의 정보를 입력해주세요.
+					<br/> 입력한 핸드폰 번호는 로그인 시 아이디입니다.</p>
+			</div>
+			<form id="registration" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label>핸드폰 번호*</label>
+					<div class="input-group with-button">
+						<!-- add "error" class to "form-control" to change border color -->
+						<input name="phone" class="form-control" type="text" placeholder="핸드폰 번호를 입력해주세요">
+						<button class="small-grey-button">인증번호 전송</button>
+					</div>
+					<!-- <span class="red-text">올바른 핸드폰 번호를 입력해주세요.</span> -->
+				</div>
+				<div class="form-group">
+					<label>이메일*</label>
+					<div class="input-group with-button">
+						<input name="email" class="form-control" type="email" placeholder="이메일을 입력해주세요">
+						<button class="small-grey-button">중복 확인</button>
+					</div>
+					<!-- <span class="red-text">올바른 이메일을 입력해주세요.</span> -->
+				</div>
+				<div class="form-group">
+					<label>비밀번호*</label>
+					<div class="input-group with-two-input">
+						<input name="password" class="form-control" type="password" placeholder="영문/숫자/특수문자 포함 8자 이상 16자 미만">
+						<!-- <span class="red-text">올바른 비밀번호를 입력해주세요.</span> -->
+					</div>
+					<div class="input-group with-two-input">
+						<input class="form-control" name="passwordConf" type="password" placeholder="한 번 더 입력해주세요">
+						<!-- <span class="red-text">비밀번호가 일치하지 않습니다.</span> -->
+					</div>
+
+				</div>
+				<div class="form-group">
+					<label>닉네임*</label>
+					<div class="input-group">
+						<input class="form-control" name="name" id="name" type="text" placeholder="닉네임을 입력해주세요">
+					</div>
+					<!-- <span class="red-text">올바른 닉네임을 입력해주세요.</span> -->
+				</div>
+				<div class="form-group">
+					<label>프로필</label>
+					<div class="input-group">
+						<!-- <div class="profile-header-container">
+							<div class="profile-header-img">
+								<div class="preview-images"></div>
+							</div>
+						</div> -->
+						<div class="upload upload-btn">
+							<div class="content-innter">
+								<p>이미지 등록
+									<i class="icon-upload-orange"></i>
+								</p>
+							</div>
+							<input type="file" name="profile_image" id="input-files" class="file-upload">
+						</div>
+					</div>
+				</div>
+
+				<div class="main-btn-group">
+					<button class="primary-blue-button" type="submit">가입하기</button>
+				</div>
+			</form>
+			<div class="mssg bg-danger">
+				<span id="check"></span>
+			</div>
+		</div>
+		<a href="/" id="loginaa" class="loginMenu"></a>
+	</section>
+	<!-- body-container -->
+
+
+
+	<%- include('./partials/footer'); -%>

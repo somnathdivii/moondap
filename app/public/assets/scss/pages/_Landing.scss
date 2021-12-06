@@ -1,0 +1,231 @@
+.landing-page{
+  padding:231px 0px 131px;
+  @media screen and (max-width: 768px){
+    padding:80px 0px 35px;
+  }
+  h3{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36px;
+    color: $black-33;
+    text-align: center;
+      }
+      h2{
+        font-style: normal;
+        font-weight: 600;
+        font-size: 60px;
+        text-align: center;
+      }
+      p{text-align: center;
+        color: $grey-A4;
+      }
+
+      .video-outer{
+        background: #F9FAFF;
+        padding:100px 0px;
+        margin-top:250px;
+        @media screen and (max-width: 768px){
+          margin-top: 65px;
+        }
+        h2{
+          font-style: normal;
+          font-weight: bold;
+          font-size: 40px;
+          line-height: 48px;
+          color: $black-33;
+        }
+        h3{
+          
+          font-weight: normal;
+          font-size: 22px;
+          line-height: 26px;
+          color: #82B3F4;
+          padding-bottom: 60px;
+          padding-top:5px;
+          span{ 
+            font-weight: bold;
+          }
+        }
+      }
+
+    
+   
+
+   .btn-group{
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 60px;
+    @media screen and (max-width: 768px){
+      width: 100%;
+    }
+   }
+   .tab-wrapper{
+     padding-top: 50px;
+     .left-panel{width:100%;text-align: center;}
+       .container-outer{
+         padding:20px 80px;
+         .d-block{
+           display: inline !important;
+           width:auto;
+         }
+        @include  display-align-center;
+        @media screen and (max-width: 768px){
+          display: contents;
+        }
+        .right-panel{
+          margin-left:7%;
+          text-align: left;
+          padding: 0px 2%;
+        a{
+          color: $blue-01;
+          margin-top: 13px;
+           display: inline-block;
+        }
+        @media screen and (max-width: 768px){
+          margin-left: 0%;
+          text-align: center;
+        }
+        }
+       }
+       h3{
+         text-align: left;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 40px;
+        line-height: 48px;
+        color: $black-33;
+        @media screen and (max-width: 768px){
+          text-align: center !important;
+        }
+      }
+        .right-panel {
+
+          h2{
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 24px;
+            color: $orange-01;text-align: left;
+            @media screen and (max-width: 768px){
+              text-align: center;
+            }
+          }
+
+            h3{
+              font-style: normal;
+              font-weight: bold;
+              font-size: 36px;
+              line-height: 47px;
+              text-align: left;
+              color: $black-33;}
+              p{
+                text-align: left;
+              }
+             
+        }
+        .nav-tabs{
+          border-bottom: transparent;
+          .nav-link{
+              font-style: normal;
+              font-weight: normal;
+              font-size: 24px;
+              line-height: 150%;
+              text-align: center;
+              color: $grey-CF;
+              text-transform: uppercase;
+              &:hover{
+                border-color: transparent;
+              }
+              &.active{color: $orange-01; border: transparent;border-bottom: 3px solid $orange-01;}
+              @media screen and (max-width: 768px){
+                font-size: 18px;
+              }
+          }
+        }
+        .tab-content{
+          padding-top: 180px;
+          @media screen and (max-width: 768px){
+            padding-top:40px;
+          }
+
+          .owl-prev{
+            position: absolute;
+            top: 50%;
+           span{
+                background: url(../../assets/images/arrow-left.png);
+                width: 28px;
+                display: inline-block;
+                height: 51px;
+                font-size: 0px;
+                &:hover{  background: url(../../assets/images/arrow-lefthover.png);}
+             }
+          }
+          .owl-next{position: absolute;
+            top: 50%; 
+             right: 0px;
+             span{
+              background: url(../../assets/images/arrowright.png);
+              width: 28px;
+              display: inline-block;
+              height: 51px;
+              font-size: 0px; 
+              &:hover{  background: url(../../assets/images/arrow-righthover.png);} 
+             }
+
+           }
+        }
+        // .owl-next{
+        //   span{}
+        // }
+        .owl-dots
+        {
+          text-align: center;
+          display: none;
+          @media screen and (max-width: 768px){
+            padding-top: 30px;
+            display: block;
+          }
+          .owl-dot{
+          &.active{
+           span{
+            background: $blue-01;
+           }
+
+          }
+        }
+         span {
+            width: 10px;
+            height: 10px;
+            margin: 5px 7px;
+            background: $white-d6;
+            display: block;
+            // -webkit-backface-visibility: visible;
+            transition: opacity .2s ease;
+            border-radius: 30px;
+        }
+        }
+        .nav-item{
+          margin: 0px 28px;
+        &:first-child{margin: 0px 28px 0px 0px;}
+        }
+   }
+
+   .carousel-indicators{
+    @media screen and (max-width: 768px){
+     bottom: -46px;
+    }
+     li{
+       background-color: $grey-CF;
+       width:10px;
+       height: 10px;
+       cursor: pointer;
+       border-radius: 50%;
+     }
+   }
+   .top-section{text-align: center;
+       img{margin: 0 auto;padding:35px 0px;}
+  }
+
+}
+

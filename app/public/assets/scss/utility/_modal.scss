@@ -1,0 +1,205 @@
+.modal{
+    .modal-dialog{
+        &.medium-modal{
+            max-width: 930px;
+            .modal-content{
+                border-radius: 8px;
+                box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+                background-color: $white-FF;
+                .modal-header{
+                    padding: 17px 32px 16px 32px;
+                    border: 0;
+                    @media screen and (max-width: 768px){
+                        padding: 17px 7px 16px 7px;
+                    }
+                    .modal-title{
+                        font-size: 18px;
+                        font-weight: normal;
+                        letter-spacing: -0.36px;
+                        color: $black-00;
+                        
+                        line-height: 22px;
+                    }
+                    .close{
+                        background: url(../../assets/icons/close-black.svg) no-repeat right center;
+                        height: 16px;
+                        width: 16px;
+                        background-size: auto 17px;
+                        position: absolute;
+                        right: 45px;
+                        top: 28px;
+                    }
+                }
+                .modal-body{
+                    padding: 32px;
+                }
+                .modal-footer{
+                    padding: 0 32px 32px;
+                    border: 0;
+                    justify-content: space-between;
+                    .history-btn{
+                        // @include button-med-white;
+                        border: solid 1px $blue-01;
+                    }
+                    .btn{
+                        max-width: 350px;
+                        width: 100%;
+                        border-radius: 5px;
+                    }
+                }
+
+                .grey-btn{background: $grey-bd;color: #fff;padding:  8px 20px 8px 20px; border-radius: 30px;font-style: normal;
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 14px;
+                    text-align: center;
+                    letter-spacing: -0.05em;
+                    width:100px;
+                    color: #FFFFFF;}
+
+                    .blue-btn{color: #fff;padding:  8px 20px 8px 20px; border-radius: 30px;font-style: normal;
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 14px;
+                        text-align: center;
+                        letter-spacing: -0.05em;
+                       border: none;
+                        color: #FFFFFF; width:100px;}
+                        .documents-left{text-decoration: underline; white-space: nowrap; 
+                            width: 272px;
+                           
+                            overflow: hidden;
+                            text-overflow: ellipsis; }
+                        .date{min-width:120px;
+                            @media screen and (max-width: 560px){
+                                min-width: 108px;
+                            }
+                        }
+                        .authorname{min-width:120px;
+                            @media screen and (max-width: 560px){
+                                min-width: 104px;
+                                margin-left:0px !important; 
+                            }
+                        }
+                   
+            }
+        }
+        &.small-modal{
+            max-width: 690px;
+            width: 100%;
+            @media screen and (max-width: 768px){
+                max-width: 97%;
+            }
+            .modal-content{
+                border-radius: 15px;
+                border: 0;
+                padding: 70px 57px;
+                .modal-body{
+                    padding: 0;
+                    h2{
+                        font-weight: bold;
+                        font-size: 40px;
+                        line-height: 48px;
+                        color: $black-33;
+                        margin-bottom: 40px;
+                    }
+                    p{
+                        font-weight: 500;
+                        font-size: 18px;
+                        line-height: 22px;
+                        color: $black-33;
+                        margin-top:20px;
+                    }
+                }
+                .modal-footer{
+                    border: 0;
+                    padding: 0;
+                    margin-top: 40px;
+                }
+
+                h6{font-weight: 500;
+                    font-size: 16px;
+                    line-height: 120%; text-align: center; color: #BDBDBD;margin-top: 8px;}
+                    
+                    
+                                 
+                   
+                         
+                   
+                    
+            }
+        }
+    }
+    .btn-wrap{
+        @include display-justify-center;
+        width: 100%;
+        .modal-button{
+            @include display-justify-center;
+            width: 250px;
+            height: 56px;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+            letter-spacing: -0.05em;
+            box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-left: 10px;
+            &:first-child{
+                margin-left: 0;
+            }
+            &.full-width{
+                width: 100%;
+            }
+            &.blue-btn{
+                background: $blue-01;
+                color: $white-FF;
+                border: solid 1px $blue-01;
+            }
+            &.white-btn{
+                background: $white-FF;
+                color: $blue-01;
+                border: solid 1px $blue-01;
+            }
+            &.red-btn{ background: $red-01;
+                color: $white-FF;
+                border: solid 1px $red-01;}
+            &.modal-width{width:100%;}
+        }         
+    }
+
+             .doc-allow-text{
+                 justify-content: space-between;
+                }
+             .txtdoc{
+                 max-width: 99% !important;
+                }
+
+            .new{font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: #A4A4A4;
+            }
+
+            .checkbox-outer{
+                @include display-justify-center;
+                padding-top: 21px;
+
+            }
+
+            // .check-box-wrap{
+            //     .custom-check{
+            //         color:$red-01 ;
+            //     }
+            // }
+        
+
+            .mydocuments-outer{
+                ul{
+                    li{margin-left: 11px !important;
+                    }
+                }
+            }
+
+   
+}

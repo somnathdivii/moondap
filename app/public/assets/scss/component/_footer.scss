@@ -1,0 +1,28 @@
+footer{
+    @include display-justify-center;
+    border-top: 1px solid $grey-eo;
+    padding: 45px 10px;
+    @media screen and (max-width: 768px){
+        padding: 14px 10px;
+    }
+    .foot-inner{
+        figure{
+            img{
+                margin: 0 auto 16px;
+                @media screen and (max-width: 768px){
+                    margin: 0 auto 7px;
+                }
+            }
+        }
+        p{
+            font-weight: normal;
+            font-size: 11px;
+            line-height: 16px;
+            color: $black-66;
+            text-align: center;
+            @media screen and (max-width: 768px){
+                font-size: 8px;
+            }
+        }
+    }
+}

@@ -1,0 +1,154 @@
+@import "./reset";
+@import "./variables";
+@import "./mixins";
+@import "./font";
+@import "./utility/icons";
+@import "./utility/form";
+@import "./utility/buttons";
+@import "./utility/modal";
+@import "./utility/components";
+@import "./component/header";
+@import "./component/footer";
+@import "./pages/home";
+@import "./pages/login";
+@import "./pages/shared-room";
+@import "./pages/mydocuments";
+@import "./pages/landing";
+@import "./pages/terms";
+@import "./pages/past-paricipents";
+
+
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $default-font;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $default-font;
+  font-weight: 500;
+}
+a {
+  color: $black-66;
+  text-decoration: none;
+  outline: 0;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.btn.focus,
+.btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+strong {
+  font-weight: bold;
+}
+
+textarea {
+  resize: none;
+}
+
+input{
+  outline: none;
+}
+/*container sizing as per feedback*/
+.container-fluid{
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.container-big {
+  max-width: 1400px;
+  width: 98%;
+  margin: 0 auto;
+  @media screen and (max-width: 768px){
+    width: 100%;
+  }
+}
+.container-medium {
+  max-width: 930px;
+  width: 95%;
+  margin: 0 auto;
+  @media screen and (max-width: 768px){
+    width: 100%;
+  }
+}
+
+.container-small {
+  max-width: 690px;
+  width: 98%;
+  margin: 0 auto;
+  @media screen and (max-width: 768px){
+    width: 100%;
+  }
+}
+
+select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background:url(../../assets/images/icon-down-arrow.png) no-repeat right center;
+  padding: 0 15px 0 0;
+}
+.form-control{
+  &:focus{
+    box-shadow: none;
+  }
+  &::placeholder {
+    color: $grey-CF;
+    opacity: 1; 
+  }
+  
+  &:-ms-input-placeholder {
+   color: $grey-CF;
+  }
+  
+  &::-ms-input-placeholder {
+   color: $grey-CF;
+  }
+}
+.no-margin{
+  margin: 0;
+}
+
+.red-text{
+  color: $red-01 !important;
+}
+.blue-text{
+  color: $blue-01 !important;
+}
+.orange-text{
+  color: $orange-01 !important;
+}
+.grey-text{
+  color: $grey-a7 !important;
+}
+
+.min-body{
+  min-height: 70vh;
+}
+
+.pl_0{
+  padding-left: 0px;
+}
+.pr_0{
+  padding-right: 0px;
+}
+.px_24{
+  padding: 0 24px;
+}
